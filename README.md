@@ -10,6 +10,8 @@ FLUX is a small hobby project to create a basic roguelike that runs in a text te
 
 The code is released into the public domain, feel free to use it or modify it in any way you choose.
 
+![Animated screenshot](animated_gif.gif)
+
 ## compilation  
 The source code can be compiled from the command line by navigating to the source directory and entering the following command;  
 
