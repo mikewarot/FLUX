@@ -8,6 +8,11 @@ interface
 
 uses
   crt;
+  
+type
+  coordinates = record
+    x, y: integer;
+  end;
 
 const
   (* Columns of the game map *)
@@ -16,15 +21,15 @@ const
   MAXROWS = 19;
 
 var
-  r, c, i: integer;
+  r, c, i, listLength: integer;
   dungeonArray: array[1..MAXROWS, 1..MAXCOLUMNS] of char;
   totalRooms, roomSquare: smallint;
   (* Player starting position *)
   startX, startY: smallint;
   (* start creating corridors once this rises above 1 *)
   roomCounter: smallint;
-  (* Centre of rooms for connecting corridors *)
-  oldX, oldY, newX, newY: smallint;
+  (* list of coordinates of centre of each room *)
+  centreList: array of coordinates;
 
 (* Carve a horizontal tunnel *)
 procedure carveHorizontally(x1, x2, y: smallint);
@@ -34,8 +39,28 @@ procedure carveVertically(y1, y2, x: smallint);
 procedure createRoom(gridNumber: smallint);
 (* Generate a dungeon *)
 procedure generate();
+ (* sort room list in order from left to right *)
+ procedure leftToRight();
 
 implementation
+
+procedure leftToRight();
+var
+  i, j, n, tempX, tempY: integer;
+begin
+  n := length(centreList) - 1;
+  for i := n downto 2 do
+    for j := 0 to i - 1 do
+      if centreList[j].x > centreList[j + 1].x then
+      begin
+        tempX := centreList[j].x;
+        tempY := centreList[j].y;
+        centreList[j].x := centreList[j + 1].x;
+        centreList[j].y := centreList[j + 1].y;
+        centreList[j + 1].x := tempX;
+        centreList[j + 1].y := tempY;
+      end;
+end;
 
 procedure carveHorizontally(x1, x2, y: smallint);
 var
@@ -130,8 +155,10 @@ begin
       nudgeAcross := 0;
   end;
   (* Save coordinates of the centre of the room *)
-  newX := (topLeftX + nudgeAcross) + (roomWidth div 2);
-  newY := (topLeftY + nudgeDown) + (roomHeight div 2);
+    listLength := Length(centreList);
+    SetLength(centreList, listLength + 1);
+    centreList[listLength].x := (topLeftX + nudgeAcross) + (roomWidth div 2);
+    centreList[listLength].y := (topLeftY + nudgeDown) + (roomHeight div 2);
   (* Draw room within the grid square *)
   for drawHeight := 0 to roomHeight do
   begin
@@ -146,6 +173,8 @@ end;
 procedure generate();
 begin
   roomCounter := 0;
+    // initialise the array
+  SetLength(centreList, 0);
   // fill map with walls
   for r := 1 to MAXROWS do
   begin
@@ -162,18 +191,17 @@ begin
     roomSquare := Random(38) + 1;
     createRoom(roomSquare);
     Inc(roomCounter);
-    if roomCounter = 1 then
-    begin
-      startX := newX;
-      startY := newY;
-      oldX := newX;
-      oldY := newY;
-    end;
-    if roomCounter > 1 then
-      createCorridor(oldX, oldY, newX, newY);
-    oldX := newX;
-    oldY := newY;
+ end;
+ leftToRight();
+  for i := 0 to (totalRooms - 2) do
+  begin
+    createCorridor(centreList[i].x, centreList[i].y, centreList[i + 1].x,
+      centreList[i + 1].y);
   end;
+  // set player start coordinates
+  startX := centreList[0].x;
+  startY := centreList[0].y;
+ 
 end;
 
 end.

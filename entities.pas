@@ -63,8 +63,8 @@ begin
     entityList[i].attitudeToPlayer := 'neutral';
     entityList[i].healthDescription := 'healthy';
     // temporarily place 2 creatures in last room
-    entityList[i].posX := dungeon.oldX;
-    entityList[i].posY := dungeon.oldY;
+    entityList[i].posX := dungeon.centreList[i+1].x;
+    entityList[i].posY := dungeon.centreList[i+1].y;
    // GotoXY(entityList[i].posX, entityList[i].posY);
    // TextColor(entityList[i].glyphColour);
    // Write(entityList[i].glyph);

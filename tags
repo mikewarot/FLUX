@@ -30,6 +30,8 @@ getY	pathfinding.pas	/^function getY(x1, y1, x2, y2: integer): smallint;$/;"	f
 get_tile_glyph	map.pas	/^function get_tile_glyph(checkX, checkY: smallint): char;$/;"	f
 hasPlayer	map.pas	/^function hasPlayer(checkX, checkY: smallint): boolean;$/;"	f
 isOccupied	map.pas	/^function isOccupied(checkX, checkY: smallint): boolean;$/;"	f
+leftToRight	dungeon.pas	/^ procedure leftToRight();$/;"	p
+leftToRight	dungeon.pas	/^procedure leftToRight();$/;"	p
 move_npc	entities.pas	/^procedure move_npc(id, newX, newY: smallint);$/;"	p
 move_player	player.pas	/^procedure move_player(newX, newY: smallint);$/;"	p
 occupy	map.pas	/^procedure occupy(x, y: smallint);$/;"	p
