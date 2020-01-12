@@ -12,7 +12,7 @@ The code is released into the public domain, feel free to use it or modify it in
 
 ![Animated screenshot](animated_gif.gif)
 ---
-![Windows screenshot](windows_screenshot.png)
+![Windows screenshot](win_screenshot.png)
 
 ## compilation  
 The source code can be compiled from the command line by navigating to the source directory and entering the following command;  
