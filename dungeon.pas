@@ -21,7 +21,7 @@ const
   MAXROWS = 19;
 
 var
-  r, c, i, listLength: integer;
+  r, c, i, p, t, listLength: integer;
   dungeonArray: array[1..MAXROWS, 1..MAXCOLUMNS] of char;
   totalRooms, roomSquare: smallint;
   (* Player starting position *)
@@ -198,6 +198,11 @@ begin
     createCorridor(centreList[i].x, centreList[i].y, centreList[i + 1].x,
       centreList[i + 1].y);
   end;
+  // connect 2 random rooms so the map isn't totally linear
+  p := random(5) + 10;
+  t := random(5) + 10;
+  createCorridor(centreList[p].x, centreList[p].y, centreList[t].x,
+    centreList[t].y);
   // set player start coordinates
   startX := centreList[0].x;
   startY := centreList[0].y;
