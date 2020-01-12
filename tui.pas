@@ -7,9 +7,7 @@ unit tui;
 interface
 
 uses
-  crt,
-  {$IFDEF WINDOWS}Windows,{$ENDIF}
-  player;
+  crt, player;
 
 const
   (* Map limits. With sidebar it comes to 80x24 - standard Unix terminal size. *)
@@ -45,7 +43,7 @@ begin
   TextColor(3); // Cyan
   GoToXY(xmax + 1, ymin);
   {$IFDEF WINDOWS}
-  Write(tui_ctl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl,
+  Write(tui_ctl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl,
     tui_hl, tui_hl, tui_hl, tui_hl, tui_ctr);
   {$ENDIF}
   {$IFDEF LINUX}
@@ -70,7 +68,7 @@ begin
   end;
   GoToXY(xmax + 1, ymax);
   {$IFDEF WINDOWS}
-  Write(tui_cbl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl,
+  Write(tui_cbl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl, tui_hl,
     tui_hl, tui_hl, tui_hl, tui_hl, tui_cbr);
   {$ENDIF}
   {$IFDEF LINUX}
