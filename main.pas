@@ -101,20 +101,20 @@ begin
   clrscr;
   (* Draw the UI *)
   tui.draw_sidepanel;
+  (* Create NPC's *)
+  entities.spawnNPC();
   (* Add the player *)
   playerX := dungeon.startX;
   playerY := dungeon.startY;
   player.spawn_player(playerX, playerY);
   tui.UpdateHP;
-  (* Create NPC's *)
-  entities.spawnNPC();
 end;
 
 procedure gameLoop();
 var
   i: smallint;
 begin
-  for i := 1 to entities.NPC_AMOUNT do
+  for i := 1 to entities.npcAmount do
     simple_ai.takeTurn(i, entities.entityList[i].posX, entities.entityList[i].posY);
 end;
 
@@ -123,7 +123,7 @@ var
   i: smallint;
 begin
   Result := False;
-  for i := 1 to entities.NPC_AMOUNT do
+  for i := 1 to entities.npcAmount do
   begin
     if (x = entities.entityList[i].posX) then
     begin

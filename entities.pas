@@ -9,9 +9,6 @@ interface
 uses
   crt, SysUtils, map, dungeon;
 
-const
-  NPC_AMOUNT = 2;
-
 type
   (* Store information about NPC's *)
   Creature = record
@@ -37,10 +34,13 @@ type
 
 var
   Grib: Creature;
-  entityList: array[1..NPC_AMOUNT] of Creature;
+  entityList: array of Creature;
+  npcAmount, listLength: smallint;
 
 (* Generate list of creatures on the map *)
 procedure spawnNPC();
+(* Create a Gribbly *)
+procedure createGribbly(uniqueid, npcx, npcy: integer);
 (* Move NPC's *)
 procedure move_npc(id, newX, newY: smallint);
 
@@ -48,27 +48,38 @@ implementation
 
 procedure spawnNPC();
 var
-  i: smallint;
+  i, p: integer;
 begin
-  for i := 1 to NPC_AMOUNT do
+  // get number of NPCs
+  npcAmount := (dungeon.totalRooms - 2) div 2;
+  // initialise array, 1 based
+  SetLength(entityList, 1);
+  p := 2; // used to space out NPC location
+  // place the NPCs
+  for i := 1 to npcAmount do
   begin
-    entityList[i].npcID := 1;
-    entityList[i].race := 'Gribbly';
-    entityList[i].glyph := 'g';
-    entityList[i].glyphColour := 2;
-    entityList[i].currentHP := 10;
-    entityList[i].maxHP := 10;
-    entityList[i].inView := False;
-    entityList[i].isAttacked := False;
-    entityList[i].attitudeToPlayer := 'neutral';
-    entityList[i].healthDescription := 'healthy';
-    // temporarily place 2 creatures in last room
-    entityList[i].posX := dungeon.centreList[i+1].x;
-    entityList[i].posY := dungeon.centreList[i+1].y;
-   // GotoXY(entityList[i].posX, entityList[i].posY);
-   // TextColor(entityList[i].glyphColour);
-   // Write(entityList[i].glyph);
+    createGribbly(i, dungeon.centreList[p + 2].x, dungeon.centreList[p + 2].y);
+    Inc(p);
   end;
+end;
+
+procedure createGribbly(uniqueid, npcx, npcy: integer);
+begin
+  // Add a new entry to list of creatures
+  listLength := length(entityList);
+  SetLength(entityList, listLength + 1);
+  entityList[listLength].npcID := uniqueid;
+  entityList[listLength].race := 'Gribbly';
+  entityList[listLength].glyph := 'g';
+  entityList[listLength].glyphColour := 2;
+  entityList[listLength].currentHP := 10;
+  entityList[listLength].maxHP := 10;
+  entityList[listLength].inView := False;
+  entityList[listLength].isAttacked := False;
+  entityList[listLength].attitudeToPlayer := 'neutral';
+  entityList[listLength].healthDescription := 'healthy';
+  entityList[listLength].posX := npcx;
+  entityList[listLength].posY := npcy;
 end;
 
 procedure move_npc(id, newX, newY: smallint);
