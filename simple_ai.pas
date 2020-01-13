@@ -65,7 +65,7 @@ begin
   newY := getY(spx, spy, player.ThePlayer.posX, player.ThePlayer.posY);
   if (map.hasPlayer(newX, newY) = True) then
   begin
-    tui.displayMessage('Gribbly '+IntToStr(id)+' hits back!');
+    tui.displayMessage('Gribbly ' + IntToStr(id) + ' hits back!');
     entities.move_npc(id, spx, spy);
     exit;
   end;

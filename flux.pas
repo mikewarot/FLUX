@@ -22,11 +22,14 @@ uses {$IFDEF LINUX}
 begin
   (* Set random seed *)
   Randomize;
+  {$IFDEF Linux}
+  RandSeed := RandSeed shl 8;
+  {$ENDIF}
   {$IFDEF Windows}
   RandSeed := ((RandSeed shl 8) or GetCurrentProcessID) xor GetTickCount64;
   {$ENDIF}
   {$IFDEF WINDOWS}
-  SetConsoleTitle('Demo Roguelike');
+  SetConsoleTitle('FLUX - Roguelike');
   cursoroff; // Hides the cursor on Windows
   {$ENDIF}
   TextBackground(0);
@@ -48,6 +51,5 @@ begin
   TextBackground(0);
   TextColor(7);
   clrscr;
-  writeln('Demo Free Pascal roguelike...');
-  //map.printArray(); // used for testing
+  writeln('FLUX -  Free pascaL rogUelike eXample...');
 end.

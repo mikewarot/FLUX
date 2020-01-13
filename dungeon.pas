@@ -8,7 +8,7 @@ interface
 
 uses
   crt;
-  
+
 type
   coordinates = record
     x, y: integer;
@@ -39,8 +39,8 @@ procedure carveVertically(y1, y2, x: smallint);
 procedure createRoom(gridNumber: smallint);
 (* Generate a dungeon *)
 procedure generate();
- (* sort room list in order from left to right *)
- procedure leftToRight();
+(* sort room list in order from left to right *)
+procedure leftToRight();
 
 implementation
 
@@ -155,10 +155,10 @@ begin
       nudgeAcross := 0;
   end;
   (* Save coordinates of the centre of the room *)
-    listLength := Length(centreList);
-    SetLength(centreList, listLength + 1);
-    centreList[listLength].x := (topLeftX + nudgeAcross) + (roomWidth div 2);
-    centreList[listLength].y := (topLeftY + nudgeDown) + (roomHeight div 2);
+  listLength := Length(centreList);
+  SetLength(centreList, listLength + 1);
+  centreList[listLength].x := (topLeftX + nudgeAcross) + (roomWidth div 2);
+  centreList[listLength].y := (topLeftY + nudgeDown) + (roomHeight div 2);
   (* Draw room within the grid square *)
   for drawHeight := 0 to roomHeight do
   begin
@@ -173,7 +173,7 @@ end;
 procedure generate();
 begin
   roomCounter := 0;
-    // initialise the array
+  // initialise the array
   SetLength(centreList, 1);
   // fill map with walls
   for r := 1 to MAXROWS do
@@ -191,8 +191,8 @@ begin
     roomSquare := Random(38) + 1;
     createRoom(roomSquare);
     Inc(roomCounter);
- end;
- leftToRight();
+  end;
+  leftToRight();
   for i := 1 to (totalRooms - 1) do
   begin
     createCorridor(centreList[i].x, centreList[i].y, centreList[i + 1].x,

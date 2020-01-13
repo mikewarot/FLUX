@@ -92,13 +92,13 @@ begin
   TextBackground(LightGray);
   TextColor(Black);
   GoToXY(25, 14);
-  write('F');
+  Write('F');
   GoToXY(35, 14);
-  write('L');
+  Write('L');
   GoToXY(40, 14);
-  write('U');
+  Write('U');
   GoToXY(48, 14);
-  write('X');
+  Write('X');
   TextColor(7);
   TextBackground(0);
 end;
