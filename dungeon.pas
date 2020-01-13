@@ -174,7 +174,7 @@ procedure generate();
 begin
   roomCounter := 0;
     // initialise the array
-  SetLength(centreList, 0);
+  SetLength(centreList, 1);
   // fill map with walls
   for r := 1 to MAXROWS do
   begin
@@ -193,7 +193,7 @@ begin
     Inc(roomCounter);
  end;
  leftToRight();
-  for i := 0 to (totalRooms - 2) do
+  for i := 1 to (totalRooms - 1) do
   begin
     createCorridor(centreList[i].x, centreList[i].y, centreList[i + 1].x,
       centreList[i + 1].y);
@@ -204,10 +204,8 @@ begin
   createCorridor(centreList[p].x, centreList[p].y, centreList[t].x,
     centreList[t].y);
   // set player start coordinates
-  startX := centreList[0].x;
-  startY := centreList[0].y;
- 
+  startX := centreList[1].x;
+  startY := centreList[1].y;
 end;
 
 end.
-
