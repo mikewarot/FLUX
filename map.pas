@@ -41,8 +41,6 @@ type
     gtx, gty: smallint;
   end;
 
-(* Display all of the map *)
-procedure reveal_map;
 (* Calculate what the player can see *)
 procedure FOV(x, y: smallint);
 (* Set up the map array *)
@@ -80,22 +78,6 @@ var
   visionRadius: array[1..MAXVISION] of maptiles;
   maparea: array[1..19, 1..67] of tile;
 
-procedure reveal_map;
-begin
-  //TextColor(DefaultTXTcol);
-  //TextBackground(DefaultBKGcol);
-  //for r := 1 to MAXROWS do
-  //begin
-  //  for c := 1 to MAXCOLUMNS do
-  //  begin
-  //    GoToXY(c, r);
-  //    if (maparea[r][c]) = '#' then
-  //      Write(wall);
-  //    if (maparea[r][c]) = '.' then
-  //      Write(floor);
-  //  end;
-  //end;
-end;
 
 (* FOV Procedures *)
 

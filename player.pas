@@ -2,16 +2,16 @@
 
 unit player;
 
-{$mode objfpc}{$H+}
+{$mode objfpc}{$H+}{$R+}
 
 interface
 
 uses
-  crt, map;
+  crt, SysUtils, map, globalutils;
 
 type
   Creature = record            // Store information about player
-    currentHP, maxHP, posX, posY: smallint;
+    currentHP, maxHP, attack, defense, posX, posY: smallint;
     glyph: char;
     glyphColour: byte;
   end;
@@ -37,6 +37,8 @@ begin
   ThePlayer.glyphColour := 14;
   ThePlayer.currentHP := 20;
   ThePlayer.maxHP := 20;
+  ThePlayer.attack := 6;
+  ThePlayer.defense := 5;
   ThePlayer.posX := spx;
   ThePlayer.posY := spy;
   main.playerX := spx;
@@ -74,9 +76,28 @@ begin
 end;
 
 procedure combat(npcID: smallint);
+var
+  damageAmount: integer;
 begin
-  tui.displayMessage('You hit the ' + entities.entityList[npcID].race);
-  entities.entityList[npcID].isAttacked := True;
+  damageAmount := globalutils.randomRange(1, ThePlayer.attack) - entities.entityList[npcID].defense;
+  if damageAmount > 0 then
+  begin
+    entities.entityList[npcID].currentHP := (entities.entityList[npcID].currentHP - damageAmount);
+    if entities.entityList[npcID].currentHP < 1 then
+    begin
+      tui.displayMessage('You kill the ' + entities.entityList[npcID].race);
+      // NPC will be deleted from array at the end of the game loop
+      entities.entityList[npcID].isDead:= True;
+      entities.entityList[npcID].glyph:= '%';
+      map.unoccupy(entities.entityList[npcID].posX, entities.entityList[npcID].posY);
+      exit;
+    end
+    else
+      tui.displayMessage('You hit the ' + entities.entityList[npcID].race +
+        ' for ' + IntToStr(damageAmount) + ' damage.');
+  end
+  else
+  tui.displayMessage('You miss');
 end;
 
 end.

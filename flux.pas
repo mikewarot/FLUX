@@ -17,7 +17,8 @@ uses {$IFDEF LINUX}
   simple_ai,
   player,
   pathfinding,
-  dungeon;
+  dungeon,
+  globalutils;
 
 begin
   (* Set random seed *)

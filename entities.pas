@@ -2,7 +2,7 @@
 
 unit entities;
 
-{$mode objfpc}{$H+}
+{$mode objfpc}{$H+}{$R+}
 
 interface
 
@@ -17,7 +17,7 @@ type
     (* Create type *)
     race: shortstring;
     (* health and position on game map *)
-    currentHP, maxHP, posX, posY: smallint;
+    currentHP, maxHP, attack, defense, posX, posY: smallint;
     (* Character used to represent NPC on game map *)
     glyph: char;
     (* Colour of character on screen *)
@@ -26,6 +26,8 @@ type
     inView: boolean;
     (* Is the NPC being attacked *)
     isAttacked: boolean;
+    (* Has the NPC been killed, to be removed at end of game loop *)
+    isDead: boolean;
     (* Whether the NPC is hostile / neutral or friendly to the player *)
     attitudeToPlayer: string;
     (* Whether the NPC is healthy / injured / badly injured *)
@@ -43,6 +45,8 @@ procedure spawnNPC();
 procedure createGribbly(uniqueid, npcx, npcy: integer);
 (* Move NPC's *)
 procedure move_npc(id, newX, newY: smallint);
+(* Kill a creature and remove it from the game *)
+procedure killEntity(id: smallint);
 
 implementation
 
@@ -72,12 +76,12 @@ begin
   entityList[listLength].race := 'Gribbly';
   entityList[listLength].glyph := 'g';
   entityList[listLength].glyphColour := 2;
-  entityList[listLength].currentHP := 10;
+  entityList[listLength].currentHP := 2;
   entityList[listLength].maxHP := 10;
+  entityList[listLength].attack := 3;
+  entityList[listLength].defense := 2;
   entityList[listLength].inView := False;
-  entityList[listLength].isAttacked := False;
-  entityList[listLength].attitudeToPlayer := 'neutral';
-  entityList[listLength].healthDescription := 'healthy';
+  entityList[listLength].isDead:= False;
   entityList[listLength].posX := npcx;
   entityList[listLength].posY := npcy;
 end;
@@ -110,6 +114,18 @@ begin
   end
   else
     Grib.inView := False;
+end;
+
+procedure killEntity(id: smallint);
+var
+  i: smallint;
+begin
+  // Remove entity from entity list
+  listLength := length(entityList);
+  for i := id + 1 to listLength - 1 do
+    entityList[i - 1] := entityList[i];
+  SetLength(entityList, listLength - 1);
+  npcAmount:=listLength-1;
 end;
 
 end.
