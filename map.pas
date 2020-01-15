@@ -49,8 +49,6 @@ procedure setup_map;
 procedure clear_vision();
 (* Clear the visual representation of the FoV *)
 procedure removeFOV();
-(* Print out the FoV array *)
-procedure printArray();
 (* Check if the direction to move to is valid *)
 function can_move(checkX, checkY: smallint): boolean;
 (* Get the character at a certain location on the map *)
@@ -211,17 +209,6 @@ begin
         maparea[r][c].character := floor;
       end;
     end;
-  end;
-end;
-
-procedure printArray();
-var
-  i: smallint;
-begin
-  for i := 1 to MAXVISION do
-  begin
-    Writeln(IntToStr(i) + '| tileID: ' + IntToStr(visionRadius[i].tileID) +
-      '. X ' + IntToStr(visionRadius[i].gtx) + ', Y ' + IntToStr(visionRadius[i].gty));
   end;
 end;
 

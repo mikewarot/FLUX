@@ -21,7 +21,8 @@ implementation
 
 procedure takeTurn(id, spx, spy: smallint);
 begin
-  if (entities.entityList[id].isAttacked = True) then
+  // check if NPC is in players FoV
+  if (map.canSee(spx, spy) = True) then
     combat(id, spx, spy)
   else
     wander(id, spx, spy);

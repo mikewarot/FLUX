@@ -45,8 +45,6 @@ procedure spawnNPC();
 procedure createGribbly(uniqueid, npcx, npcy: integer);
 (* Move NPC's *)
 procedure move_npc(id, newX, newY: smallint);
-(* Kill a creature and remove it from the game *)
-procedure killEntity(id: smallint);
 
 implementation
 
@@ -114,18 +112,6 @@ begin
   end
   else
     Grib.inView := False;
-end;
-
-procedure killEntity(id: smallint);
-var
-  i: smallint;
-begin
-  // Remove entity from entity list
-  listLength := length(entityList);
-  for i := id + 1 to listLength - 1 do
-    entityList[i - 1] := entityList[i];
-  SetLength(entityList, listLength - 1);
-  npcAmount:=listLength-1;
 end;
 
 end.
