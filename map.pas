@@ -70,7 +70,7 @@ uses
   tui, dungeon, player;
 
 var
-  r, c: integer;
+  r, c: smallint;
   (* FOV tile ID *)
   visID: smallint;
   visionRadius: array[1..MAXVISION] of maptiles;

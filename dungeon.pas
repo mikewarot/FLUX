@@ -11,7 +11,7 @@ uses
 
 type
   coordinates = record
-    x, y: integer;
+    x, y: smallint;
   end;
 
 const
@@ -21,7 +21,7 @@ const
   MAXROWS = 19;
 
 var
-  r, c, i, p, t, listLength: integer;
+  r, c, i, p, t, listLength: smallint;
   dungeonArray: array[1..MAXROWS, 1..MAXCOLUMNS] of char;
   totalRooms, roomSquare: smallint;
   (* Player starting position *)
@@ -46,7 +46,7 @@ implementation
 
 procedure leftToRight();
 var
-  i, j, n, tempX, tempY: integer;
+  i, j, n, tempX, tempY: smallint;
 begin
   n := length(centreList) - 1;
   for i := n downto 2 do

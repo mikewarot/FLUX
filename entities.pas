@@ -42,7 +42,7 @@ var
 (* Generate list of creatures on the map *)
 procedure spawnNPC();
 (* Create a Gribbly *)
-procedure createGribbly(uniqueid, npcx, npcy: integer);
+procedure createGribbly(uniqueid, npcx, npcy: smallint);
 (* Move NPC's *)
 procedure moveNPC(id, newX, newY: smallint);
 
@@ -50,7 +50,7 @@ implementation
 
 procedure spawnNPC();
 var
-  i, p: integer;
+  i, p: smallint;
 begin
   // get number of NPCs
   npcAmount := (dungeon.totalRooms - 2) div 2;
@@ -65,7 +65,7 @@ begin
   end;
 end;
 
-procedure createGribbly(uniqueid, npcx, npcy: integer);
+procedure createGribbly(uniqueid, npcx, npcy: smallint);
 begin
   // Add a new entry to list of creatures
   listLength := length(entityList);

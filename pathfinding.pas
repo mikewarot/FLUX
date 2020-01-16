@@ -8,18 +8,18 @@ uses
   crt;
 
 (* Bresenham line between 2 points *)
-procedure drawLine(x1, y1, x2, y2: integer);
+procedure drawLine(x1, y1, x2, y2: smallint);
 (* Move 1 step towards a target X position *)
-function getX(x1, y1, x2, y2: integer): smallint;
+function getX(x1, y1, x2, y2: smallint): smallint;
 (* Move 1 step towards a target Y position *)
-function getY(x1, y1, x2, y2: integer): smallint;
+function getY(x1, y1, x2, y2: smallint): smallint;
 
 implementation
 
-function getX(x1, y1, x2, y2: integer): smallint;
+function getX(x1, y1, x2, y2: smallint): smallint;
 var
   i, deltax, deltay, numpixels, d, dinc1, dinc2, x, xinc1, xinc2, y,
-  yinc1, yinc2: integer;
+  yinc1, yinc2: smallint;
 begin
   deltax := abs(x2 - x1);
   deltay := abs(y2 - y1);
@@ -79,10 +79,10 @@ begin
   end;
 end;
 
-function getY(x1, y1, x2, y2: integer): smallint;
+function getY(x1, y1, x2, y2: smallint): smallint;
 var
   i, deltax, deltay, numpixels, d, dinc1, dinc2, x, xinc1, xinc2, y,
-  yinc1, yinc2: integer;
+  yinc1, yinc2: smallint;
 begin
   deltax := abs(x2 - x1);
   deltay := abs(y2 - y1);
@@ -142,10 +142,10 @@ begin
   end;
 end;
 
-procedure drawLine(x1, y1, x2, y2: integer);
+procedure drawLine(x1, y1, x2, y2: smallint);
 var
   i, deltax, deltay, numpixels, d, dinc1, dinc2, x, xinc1, xinc2, y,
-  yinc1, yinc2: integer;
+  yinc1, yinc2: smallint;
 begin
 
   (* Calculate delta X and delta Y for initialisation *)

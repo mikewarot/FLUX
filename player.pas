@@ -77,7 +77,7 @@ end;
 
 procedure combat(npcID: smallint);
 var
-  damageAmount: integer;
+  damageAmount: smallint;
 begin
   damageAmount := globalutils.randomRange(1, ThePlayer.attack) - entities.entityList[npcID].defense;
   if damageAmount > 0 then
