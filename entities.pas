@@ -111,7 +111,7 @@ begin
     Write(entityList[id].glyph);
   end
   else
-    Grib.inView := False;
+    entityList[id].inView := False;
 end;
 
 end.
