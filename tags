@@ -11,11 +11,13 @@ canSee	map.pas	/^function canSee(checkX, checkY: smallint): boolean;$/;"	f
 can_move	map.pas	/^function can_move(checkX, checkY: smallint): boolean;$/;"	f
 carveHorizontally	dungeon.pas	/^procedure carveHorizontally(x1, x2, y: smallint);$/;"	p
 carveVertically	dungeon.pas	/^procedure carveVertically(y1, y2, x: smallint);$/;"	p
+chasePlayer	simple_ai.pas	/^procedure chasePlayer(id, spx, spy: smallint);$/;"	p
 clear_vision	map.pas	/^procedure clear_vision();$/;"	p
 combat	player.pas	/^procedure combat(npcID: smallint);$/;"	p
-combat	simple_ai.pas	/^procedure combat(id, spx, spy: smallint);$/;"	p
+combat	simple_ai.pas	/^procedure combat(id: smallint);$/;"	p
 combatCheck	main.pas	/^function combatCheck(x, y: smallint): boolean;$/;"	f
 createCorridor	dungeon.pas	/^procedure createCorridor(fromX, fromY, toX, toY: smallint);$/;"	p
+createGribbly	entities.pas	/^procedure createGribbly(uniqueid, npcx, npcy: integer);$/;"	p
 createRoom	dungeon.pas	/^procedure createRoom(gridNumber: smallint);$/;"	p
 displayMessage	tui.pas	/^procedure displayMessage(message: string); \/\/ Display message$/;"	p
 displayMessage	tui.pas	/^procedure displayMessage(message: string);$/;"	p
@@ -30,15 +32,13 @@ getY	pathfinding.pas	/^function getY(x1, y1, x2, y2: integer): smallint;$/;"	f
 get_tile_glyph	map.pas	/^function get_tile_glyph(checkX, checkY: smallint): char;$/;"	f
 hasPlayer	map.pas	/^function hasPlayer(checkX, checkY: smallint): boolean;$/;"	f
 isOccupied	map.pas	/^function isOccupied(checkX, checkY: smallint): boolean;$/;"	f
-leftToRight	dungeon.pas	/^ procedure leftToRight();$/;"	p
 leftToRight	dungeon.pas	/^procedure leftToRight();$/;"	p
 move_npc	entities.pas	/^procedure move_npc(id, newX, newY: smallint);$/;"	p
 move_player	player.pas	/^procedure move_player(newX, newY: smallint);$/;"	p
 occupy	map.pas	/^procedure occupy(x, y: smallint);$/;"	p
 paint_FOV	map.pas	/^procedure paint_FOV(y1, x1, y2, x2, y3, x3, y4, x4, y5, x5: smallint);$/;"	p
-printArray	map.pas	/^procedure printArray();$/;"	p
+randomRange	globalutils.pas	/^function randomRange(fromNumber, toNumber: integer): integer;$/;"	f
 removeFOV	map.pas	/^procedure removeFOV();$/;"	p
-reveal_map	map.pas	/^procedure reveal_map;$/;"	p
 setup_map	map.pas	/^procedure setup_map;$/;"	p
 spawnNPC	entities.pas	/^procedure spawnNPC();$/;"	p
 spawn_player	player.pas	/^procedure spawn_player(spx, spy: smallint);$/;"	p
