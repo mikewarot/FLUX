@@ -44,15 +44,15 @@ type
 (* Calculate what the player can see *)
 procedure FOV(x, y: smallint);
 (* Set up the map array *)
-procedure setup_map;
+procedure setupMap;
 (* remove everything from FoV array *)
-procedure clear_vision();
+procedure clearVision();
 (* Clear the visual representation of the FoV *)
 procedure removeFOV();
 (* Check if the direction to move to is valid *)
-function can_move(checkX, checkY: smallint): boolean;
+function canMove(checkX, checkY: smallint): boolean;
 (* Get the character at a certain location on the map *)
-function get_tile_glyph(checkX, checkY: smallint): char;
+function getTileGlyph(checkX, checkY: smallint): char;
 (* Check if an object is in players FoV *)
 function canSee(checkX, checkY: smallint): boolean;
 (* Occupy tile *)
@@ -89,7 +89,7 @@ begin
 end;
 
 (* Add what can be seen to the FOV array & paint the tiles *)
-procedure paint_FOV(y1, x1, y2, x2, y3, x3, y4, x4, y5, x5: smallint);
+procedure paintFOV(y1, x1, y2, x2, y3, x3, y4, x4, y5, x5: smallint);
 var
   i, x, y: smallint;
 begin
@@ -148,40 +148,40 @@ procedure FOV(x, y: smallint);
 begin
   visID := 0;
   (* First octant *)
-  paint_FOV(y - 1, x, y - 2, x, y - 3, x, y - 4, x, y - 5, x);
-  paint_FOV(y - 1, x, y - 2, x, y - 3, x + 1, y - 4, x + 1, y - 5, x + 1);
-  paint_FOV(y - 1, x, y - 2, x + 1, y - 3, x + 1, y - 4, x + 2, y - 4, x + 2);
-  paint_FOV(y - 1, x + 1, y - 2, x + 2, y - 3, x + 2, y - 3, x + 3, y - 4, x + 3);
-  paint_FOV(y - 1, x + 1, y - 1, x + 2, y - 2, x + 3, y - 3, x + 4, y - 3, x + 4);
-  paint_FOV(y, x + 1, y - 1, x + 2, y - 1, x + 3, y - 2, x + 4, y - 2, x + 5);
-  paint_FOV(y, x + 1, y, x + 2, y - 1, x + 3, y - 1, x + 4, y - 1, x + 5);
+  paintFOV(y - 1, x, y - 2, x, y - 3, x, y - 4, x, y - 5, x);
+  paintFOV(y - 1, x, y - 2, x, y - 3, x + 1, y - 4, x + 1, y - 5, x + 1);
+  paintFOV(y - 1, x, y - 2, x + 1, y - 3, x + 1, y - 4, x + 2, y - 4, x + 2);
+  paintFOV(y - 1, x + 1, y - 2, x + 2, y - 3, x + 2, y - 3, x + 3, y - 4, x + 3);
+  paintFOV(y - 1, x + 1, y - 1, x + 2, y - 2, x + 3, y - 3, x + 4, y - 3, x + 4);
+  paintFOV(y, x + 1, y - 1, x + 2, y - 1, x + 3, y - 2, x + 4, y - 2, x + 5);
+  paintFOV(y, x + 1, y, x + 2, y - 1, x + 3, y - 1, x + 4, y - 1, x + 5);
   (* Second octant *)
-  paint_FOV(y, x + 1, y, x + 2, y, x + 3, y, x + 4, y, x + 5);
-  paint_FOV(y, x + 1, y, x + 2, y + 1, x + 3, y + 1, x + 4, y + 1, x + 5);
-  paint_FOV(y, x + 1, y + 1, x + 2, y + 1, x + 3, y + 2, x + 4, y + 2, x + 5);
-  paint_FOV(y + 1, x + 1, y + 2, x + 2, y + 2, x + 3, y + 3, x + 3, y + 3, x + 4);
-  paint_FOV(y + 1, x + 1, y + 2, x + 1, y + 3, x + 2, y + 4, x + 3, y + 4, x + 3);
-  paint_FOV(y + 1, x, y + 2, x + 1, y + 3, x + 1, y + 4, x + 2, y + 4, x + 3);
-  paint_FOV(y + 1, x, y + 2, x, y + 3, x + 1, y + 4, x + 1, y + 5, x + 1);
+  paintFOV(y, x + 1, y, x + 2, y, x + 3, y, x + 4, y, x + 5);
+  paintFOV(y, x + 1, y, x + 2, y + 1, x + 3, y + 1, x + 4, y + 1, x + 5);
+  paintFOV(y, x + 1, y + 1, x + 2, y + 1, x + 3, y + 2, x + 4, y + 2, x + 5);
+  paintFOV(y + 1, x + 1, y + 2, x + 2, y + 2, x + 3, y + 3, x + 3, y + 3, x + 4);
+  paintFOV(y + 1, x + 1, y + 2, x + 1, y + 3, x + 2, y + 4, x + 3, y + 4, x + 3);
+  paintFOV(y + 1, x, y + 2, x + 1, y + 3, x + 1, y + 4, x + 2, y + 4, x + 3);
+  paintFOV(y + 1, x, y + 2, x, y + 3, x + 1, y + 4, x + 1, y + 5, x + 1);
   (* Third octant *)
-  paint_FOV(y + 1, x, y + 2, x, y + 3, x, y + 4, x, y + 5, x);
-  paint_FOV(y + 1, x, y + 2, x, y + 3, x - 1, y + 4, x - 1, y + 5, x - 1);
-  paint_FOV(y + 1, x, y + 2, x - 1, y + 3, x - 1, y + 4, x - 2, y + 4, x - 3);
-  paint_FOV(y + 1, x - 1, y + 2, x - 1, y + 3, x - 2, y + 4, x - 3, y + 4, x - 3);
-  paint_FOV(y + 1, x - 1, y + 2, x - 2, y + 2, x - 3, y + 3, x - 3, y + 3, x - 4);
-  paint_FOV(y, x - 1, y + 1, x - 2, y + 1, x - 3, y + 2, x - 4, y + 2, x - 5);
-  paint_FOV(y, x - 1, y, x - 2, y + 1, x - 3, y + 1, x - 4, y + 1, x - 5);
+  paintFOV(y + 1, x, y + 2, x, y + 3, x, y + 4, x, y + 5, x);
+  paintFOV(y + 1, x, y + 2, x, y + 3, x - 1, y + 4, x - 1, y + 5, x - 1);
+  paintFOV(y + 1, x, y + 2, x - 1, y + 3, x - 1, y + 4, x - 2, y + 4, x - 3);
+  paintFOV(y + 1, x - 1, y + 2, x - 1, y + 3, x - 2, y + 4, x - 3, y + 4, x - 3);
+  paintFOV(y + 1, x - 1, y + 2, x - 2, y + 2, x - 3, y + 3, x - 3, y + 3, x - 4);
+  paintFOV(y, x - 1, y + 1, x - 2, y + 1, x - 3, y + 2, x - 4, y + 2, x - 5);
+  paintFOV(y, x - 1, y, x - 2, y + 1, x - 3, y + 1, x - 4, y + 1, x - 5);
   (* Fourth octant *)
-  paint_FOV(y, x - 1, y, x - 2, y, x - 3, y, x - 4, y, x - 5);
-  paint_FOV(y, x - 1, y, x - 2, y - 1, x - 3, y - 1, x - 4, y - 1, x - 5);
-  paint_FOV(y, x - 1, y - 1, x - 2, y - 1, x - 3, y - 2, x - 4, y - 2, x - 5);
-  paint_FOV(y - 1, x - 1, y - 1, x - 2, y - 2, x - 3, y - 3, x - 4, y - 3, x - 4);
-  paint_FOV(y - 1, x - 1, y - 2, x - 2, y - 3, x - 2, y - 3, x - 3, y - 4, x - 3);
-  paint_FOV(y - 1, x, y - 2, x - 1, y - 3, x - 1, y - 4, x - 2, y - 4, x - 2);
-  paint_FOV(y - 1, x, y - 2, x, y - 3, x - 1, y - 4, x - 1, y - 5, x - 1);
+  paintFOV(y, x - 1, y, x - 2, y, x - 3, y, x - 4, y, x - 5);
+  paintFOV(y, x - 1, y, x - 2, y - 1, x - 3, y - 1, x - 4, y - 1, x - 5);
+  paintFOV(y, x - 1, y - 1, x - 2, y - 1, x - 3, y - 2, x - 4, y - 2, x - 5);
+  paintFOV(y - 1, x - 1, y - 1, x - 2, y - 2, x - 3, y - 3, x - 4, y - 3, x - 4);
+  paintFOV(y - 1, x - 1, y - 2, x - 2, y - 3, x - 2, y - 3, x - 3, y - 4, x - 3);
+  paintFOV(y - 1, x, y - 2, x - 1, y - 3, x - 1, y - 4, x - 2, y - 4, x - 2);
+  paintFOV(y - 1, x, y - 2, x, y - 3, x - 1, y - 4, x - 1, y - 5, x - 1);
 end;
 
-procedure setup_map;
+procedure setupMap;
 var
   id_int: smallint; // give each tile a unique ID number
 begin
@@ -212,7 +212,7 @@ begin
   end;
 end;
 
-function can_move(checkX, checkY: smallint): boolean;
+function canMove(checkX, checkY: smallint): boolean;
 begin
   Result := False;
   if (checkX < tui.xmax) and (checkX > tui.xmin) and (checkY > tui.ymin) and
@@ -220,7 +220,7 @@ begin
     Result := True;
 end;
 
-function get_tile_glyph(checkX, checkY: smallint): char;
+function getTileGlyph(checkX, checkY: smallint): char;
 begin
   Result := maparea[checkY][checkX].character;
 end;
@@ -292,7 +292,7 @@ begin
 end;
 
 (* Clears all tiles in players vision *)
-procedure clear_vision();
+procedure clearVision();
 var
   i: smallint;
 begin

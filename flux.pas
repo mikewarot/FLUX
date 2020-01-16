@@ -41,7 +41,7 @@ begin
   (* Setup new game *)
   main.gameStart();
   (* Game Loop *)
-  main.wait_for_input();
+  main.waitForInput();
   (* exit game *)
   {$IFDEF WINDOWS}
   cursoron; // Unhides the cursor on Windows

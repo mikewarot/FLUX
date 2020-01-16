@@ -28,15 +28,15 @@ const
 var
   messageArray: array[1..3] of string = (' ', ' ', ' ');
 
-procedure draw_sidepanel; // Draws the panel on side of screen
-procedure title_screen; // Display title screen
+procedure drawSidepanel; // Draws the panel on side of screen
+procedure titleScreen; // Display title screen
 procedure displayMessage(message: string); // Display message
 procedure UpdateHP; // Updates the amount of HP on the sidebar
 
 implementation
 
 (* Draws border around sidepanel *)
-procedure draw_sidepanel;
+procedure drawSidepanel;
 var
   y: longint;
 begin
@@ -82,7 +82,7 @@ begin
 end;
 
 (* Draws the title screen *)
-procedure title_screen;
+procedure titleScreen;
 begin
   GoToXY(38, 12);
   TextColor(LightGray);

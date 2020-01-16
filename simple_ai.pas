@@ -45,7 +45,7 @@ begin
     Inc(attempts);
     if attempts > 10 then
     begin
-      entities.move_npc(id, spx, spy);
+      entities.moveNPC(id, spx, spy);
       exit;
     end;
     case direction of
@@ -56,8 +56,8 @@ begin
       4: testx := spx;
       5: testy := spy;
     end
-  until (map.can_move(testx, testy) = True) and (map.isOccupied(testx, testy) = False);
-  entities.move_npc(id, testx, testy);
+  until (map.canMove(testx, testy) = True) and (map.isOccupied(testx, testy) = False);
+  entities.moveNPC(id, testx, testy);
 end;
 
 procedure chasePlayer(id, spx, spy: smallint);
@@ -68,11 +68,11 @@ begin
   newY := pathfinding.getY(spx, spy, player.ThePlayer.posX, player.ThePlayer.posY);
   if (map.hasPlayer(newX, newY) = True) then
   begin
-    entities.move_npc(id, spx, spy);
+    entities.moveNPC(id, spx, spy);
     combat(id);
   end
   else
-    entities.move_npc(id, newX, newY);
+    entities.moveNPC(id, newX, newY);
 end;
 
 procedure combat(id: smallint);

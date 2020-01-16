@@ -44,7 +44,7 @@ procedure spawnNPC();
 (* Create a Gribbly *)
 procedure createGribbly(uniqueid, npcx, npcy: integer);
 (* Move NPC's *)
-procedure move_npc(id, newX, newY: smallint);
+procedure moveNPC(id, newX, newY: smallint);
 
 implementation
 
@@ -84,7 +84,7 @@ begin
   entityList[listLength].posY := npcy;
 end;
 
-procedure move_npc(id, newX, newY: smallint);
+procedure moveNPC(id, newX, newY: smallint);
 begin
   (* delete old position *)
   if entityList[id].inView = True then
@@ -92,7 +92,7 @@ begin
     GotoXY(entityList[id].posX, entityList[id].posY);
     TextBackground(map.DefaultBKGcol);
     TextColor(map.DefaultTXTcol);
-    Write(map.get_tile_glyph(entityList[id].posX, entityList[id].posY));
+    Write(map.getTileGlyph(entityList[id].posX, entityList[id].posY));
   end;
   (* mark tile as unoccupied *)
   map.unoccupy(entityList[id].posX, entityList[id].posY);

@@ -20,7 +20,7 @@ var
 (* New game setup *)
 procedure gameStart();
 (* Waits for player input *)
-procedure wait_for_input();
+procedure waitForInput();
 (* Handles NPC movement after player moves *)
 procedure gameLoop();
 (* Check if tile is occupied by an NPC *)
@@ -37,7 +37,7 @@ uses
   dungeon;
 
 (* Each movement is triggered by an individual keypress as the game is turn based *)
-procedure wait_for_input();
+procedure waitForInput();
 var
   oldX, oldY: smallint;
 begin
@@ -72,9 +72,9 @@ begin
         gameLoop();
       end;
     (* check if tile is a floor tile *)
-    if (map.can_move(playerX, playerY) = True) then
+    if (map.canMove(playerX, playerY) = True) then
     begin
-      player.move_player(playerX, playerY);
+      player.movePlayer(playerX, playerY);
       tui.UpdateHP;
       gameLoop();
     end
@@ -93,20 +93,20 @@ end;
 procedure gameStart();
 begin
   (* Draw the title screen *)
-  tui.title_screen;
+  tui.titleScreen;
   (* Set up the map *)
-  map.setup_map;
+  map.setupMap;
   (* wait for a keypress *)
   readkey;
   clrscr;
   (* Draw the UI *)
-  tui.draw_sidepanel;
+  tui.drawSidepanel;
   (* Create NPC's *)
   entities.spawnNPC();
   (* Add the player *)
   playerX := dungeon.startX;
   playerY := dungeon.startY;
-  player.spawn_player(playerX, playerY);
+  player.spawnPlayer(playerX, playerY);
   tui.UpdateHP;
 end;
 

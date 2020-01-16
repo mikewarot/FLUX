@@ -7,12 +7,12 @@
 FOV	map.pas	/^procedure FOV(x, y: smallint);$/;"	p
 UpdateHP	tui.pas	/^procedure UpdateHP; \/\/ Updates the amount of HP on the sidebar$/;"	p
 UpdateHP	tui.pas	/^procedure UpdateHP;$/;"	p
+canMove	map.pas	/^function canMove(checkX, checkY: smallint): boolean;$/;"	f
 canSee	map.pas	/^function canSee(checkX, checkY: smallint): boolean;$/;"	f
-can_move	map.pas	/^function can_move(checkX, checkY: smallint): boolean;$/;"	f
 carveHorizontally	dungeon.pas	/^procedure carveHorizontally(x1, x2, y: smallint);$/;"	p
 carveVertically	dungeon.pas	/^procedure carveVertically(y1, y2, x: smallint);$/;"	p
 chasePlayer	simple_ai.pas	/^procedure chasePlayer(id, spx, spy: smallint);$/;"	p
-clear_vision	map.pas	/^procedure clear_vision();$/;"	p
+clearVision	map.pas	/^procedure clearVision();$/;"	p
 combat	player.pas	/^procedure combat(npcID: smallint);$/;"	p
 combat	simple_ai.pas	/^procedure combat(id: smallint);$/;"	p
 combatCheck	main.pas	/^function combatCheck(x, y: smallint): boolean;$/;"	f
@@ -22,30 +22,30 @@ createRoom	dungeon.pas	/^procedure createRoom(gridNumber: smallint);$/;"	p
 displayMessage	tui.pas	/^procedure displayMessage(message: string); \/\/ Display message$/;"	p
 displayMessage	tui.pas	/^procedure displayMessage(message: string);$/;"	p
 drawLine	pathfinding.pas	/^procedure drawLine(x1, y1, x2, y2: integer);$/;"	p
-draw_sidepanel	tui.pas	/^procedure draw_sidepanel; \/\/ Draws the panel on side of screen$/;"	p
-draw_sidepanel	tui.pas	/^procedure draw_sidepanel;$/;"	p
+drawSidepanel	tui.pas	/^procedure drawSidepanel; \/\/ Draws the panel on side of screen$/;"	p
+drawSidepanel	tui.pas	/^procedure drawSidepanel;$/;"	p
 gameLoop	main.pas	/^procedure gameLoop();$/;"	p
 gameStart	main.pas	/^procedure gameStart();$/;"	p
 generate	dungeon.pas	/^procedure generate();$/;"	p
+getTileGlyph	map.pas	/^function getTileGlyph(checkX, checkY: smallint): char;$/;"	f
 getX	pathfinding.pas	/^function getX(x1, y1, x2, y2: integer): smallint;$/;"	f
 getY	pathfinding.pas	/^function getY(x1, y1, x2, y2: integer): smallint;$/;"	f
-get_tile_glyph	map.pas	/^function get_tile_glyph(checkX, checkY: smallint): char;$/;"	f
 hasPlayer	map.pas	/^function hasPlayer(checkX, checkY: smallint): boolean;$/;"	f
 isOccupied	map.pas	/^function isOccupied(checkX, checkY: smallint): boolean;$/;"	f
 leftToRight	dungeon.pas	/^procedure leftToRight();$/;"	p
-move_npc	entities.pas	/^procedure move_npc(id, newX, newY: smallint);$/;"	p
-move_player	player.pas	/^procedure move_player(newX, newY: smallint);$/;"	p
+moveNPC	entities.pas	/^procedure moveNPC(id, newX, newY: smallint);$/;"	p
+movePlayer	player.pas	/^procedure movePlayer(newX, newY: smallint);$/;"	p
 occupy	map.pas	/^procedure occupy(x, y: smallint);$/;"	p
-paint_FOV	map.pas	/^procedure paint_FOV(y1, x1, y2, x2, y3, x3, y4, x4, y5, x5: smallint);$/;"	p
+paintFOV	map.pas	/^procedure paintFOV(y1, x1, y2, x2, y3, x3, y4, x4, y5, x5: smallint);$/;"	p
 randomRange	globalutils.pas	/^function randomRange(fromNumber, toNumber: integer): integer;$/;"	f
 removeFOV	map.pas	/^procedure removeFOV();$/;"	p
-setup_map	map.pas	/^procedure setup_map;$/;"	p
+setupMap	map.pas	/^procedure setupMap;$/;"	p
 spawnNPC	entities.pas	/^procedure spawnNPC();$/;"	p
-spawn_player	player.pas	/^procedure spawn_player(spx, spy: smallint);$/;"	p
+spawnPlayer	player.pas	/^procedure spawnPlayer(spx, spy: smallint);$/;"	p
 takeTurn	simple_ai.pas	/^procedure takeTurn(id, spx, spy: smallint);$/;"	p
-title_screen	tui.pas	/^procedure title_screen; \/\/ Display title screen$/;"	p
-title_screen	tui.pas	/^procedure title_screen;$/;"	p
+titleScreen	tui.pas	/^procedure titleScreen; \/\/ Display title screen$/;"	p
+titleScreen	tui.pas	/^procedure titleScreen;$/;"	p
 unoccupy	map.pas	/^procedure unoccupy(x, y: smallint);$/;"	p
 updateVisibleTiles	map.pas	/^procedure updateVisibleTiles(i, y, x: smallint);$/;"	p
-wait_for_input	main.pas	/^procedure wait_for_input();$/;"	p
+waitForInput	main.pas	/^procedure waitForInput();$/;"	p
 wander	simple_ai.pas	/^procedure wander(id, spx, spy: smallint);$/;"	p

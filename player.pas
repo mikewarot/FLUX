@@ -20,9 +20,9 @@ var
   ThePlayer: Creature;
 
 (* Place player on game map *)
-procedure spawn_player(spx, spy: smallint);
+procedure spawnPlayer(spx, spy: smallint);
 (* Move the player *)
-procedure move_player(newX, newY: smallint);
+procedure movePlayer(newX, newY: smallint);
 (* Attack NPC *)
 procedure combat(npcID: smallint);
 
@@ -31,7 +31,7 @@ implementation
 uses
   main, tui, entities;
 
-procedure spawn_player(spx, spy: smallint);
+procedure spawnPlayer(spx, spy: smallint);
 begin
   ThePlayer.glyph := '@';
   ThePlayer.glyphColour := 14;
@@ -50,16 +50,16 @@ begin
   map.FOV(spx, spy);
 end;
 
-procedure move_player(newX, newY: smallint);
+procedure movePlayer(newX, newY: smallint);
 begin
   (* repaint any tiles not in FOV *)
   map.removeFOV();
-  map.clear_vision();
+  map.clearVision();
   (* delete old position *)
   GotoXY(ThePlayer.posX, ThePlayer.posY);
   TextBackground(map.DefaultBKGcol);
   TextColor(map.DefaultTXTcol);
-  Write(map.get_tile_glyph(ThePlayer.posX, ThePlayer.posY));
+  Write(map.getTileGlyph(ThePlayer.posX, ThePlayer.posY));
   (* mark tile as unoccupied *)
   map.unoccupy(ThePlayer.posX, ThePlayer.posY);
   (* update new position *)
