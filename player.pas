@@ -37,8 +37,8 @@ begin
   ThePlayer.glyphColour := 14;
   ThePlayer.currentHP := 20;
   ThePlayer.maxHP := 20;
-  ThePlayer.attack := 6;
-  ThePlayer.defense := 5;
+  ThePlayer.attack := 5;
+  ThePlayer.defense := 2;
   ThePlayer.posX := spx;
   ThePlayer.posY := spy;
   main.playerX := spx;
@@ -94,7 +94,7 @@ begin
     end
     else
       tui.displayMessage('You hit the ' + entities.entityList[npcID].race +
-        ' for ' + IntToStr(damageAmount) + ' damage.');
+        ' for ' + IntToStr(damageAmount) + ' HP.');
   end
   else
   tui.displayMessage('You miss');
