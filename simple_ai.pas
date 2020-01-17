@@ -90,11 +90,11 @@ begin
       exit;
     end
     else
-      tui.displayMessage('The Gribbly attacks you for ' +
+      tui.displayMessage('The '+entities.entityList[id].race+' attacks you for ' +
         IntToStr(damageAmount) + ' HP');
   end
   else
-    tui.displayMessage('The Gribbly attacks but misses.');
+    tui.displayMessage('The '+entities.entityList[id].race+' attacks but misses.');
 end;
 
 end.

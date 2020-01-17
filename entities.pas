@@ -7,7 +7,7 @@ unit entities;
 interface
 
 uses
-  crt, SysUtils, map, dungeon;
+  crt, SysUtils, map, dungeon, globalutils;
 
 type
   (* Store information about NPC's *)
@@ -24,18 +24,11 @@ type
     glyphColour: byte;
     (* Is the NPC in the players FoV *)
     inView: boolean;
-    (* Is the NPC being attacked *)
-    isAttacked: boolean;
     (* Has the NPC been killed, to be removed at end of game loop *)
     isDead: boolean;
-    (* Whether the NPC is hostile / neutral or friendly to the player *)
-    attitudeToPlayer: string;
-    (* Whether the NPC is healthy / injured / badly injured *)
-    healthDescription: string;
   end;
 
 var
-  Grib: Creature;
   entityList: array of Creature;
   npcAmount, listLength: smallint;
 
@@ -43,6 +36,8 @@ var
 procedure spawnNPC();
 (* Create a Gribbly *)
 procedure createGribbly(uniqueid, npcx, npcy: smallint);
+(* Create a Booger *)
+procedure createBooger(uniqueid, npcx, npcy: smallint);
 (* Move NPC's *)
 procedure moveNPC(id, newX, newY: smallint);
 
@@ -50,7 +45,7 @@ implementation
 
 procedure spawnNPC();
 var
-  i, p: smallint;
+  i, p, r: smallint;
 begin
   // get number of NPCs
   npcAmount := (dungeon.totalRooms - 2) div 2;
@@ -60,7 +55,12 @@ begin
   // place the NPCs
   for i := 1 to npcAmount do
   begin
-    createGribbly(i, dungeon.centreList[p + 2].x, dungeon.centreList[p + 2].y);
+    // randomly select a monster type
+    r := globalutils.randomRange(0, 1);
+    if r = 1 then
+      createBooger(i, dungeon.centreList[p + 2].x, dungeon.centreList[p + 2].y);
+    if r = 0 then
+      createGribbly(i, dungeon.centreList[p + 2].x, dungeon.centreList[p + 2].y);
     Inc(p);
   end;
 end;
@@ -79,7 +79,26 @@ begin
   entityList[listLength].attack := 3;
   entityList[listLength].defense := 2;
   entityList[listLength].inView := False;
-  entityList[listLength].isDead:= False;
+  entityList[listLength].isDead := False;
+  entityList[listLength].posX := npcx;
+  entityList[listLength].posY := npcy;
+end;
+
+procedure createBooger(uniqueid, npcx, npcy: smallint);
+begin
+  // Add a new entry to list of creatures
+  listLength := length(entityList);
+  SetLength(entityList, listLength + 1);
+  entityList[listLength].npcID := uniqueid;
+  entityList[listLength].race := 'Booger';
+  entityList[listLength].glyph := 'b';
+  entityList[listLength].glyphColour := 11;
+  entityList[listLength].currentHP := 5;
+  entityList[listLength].maxHP := 10;
+  entityList[listLength].attack := 2;
+  entityList[listLength].defense := 2;
+  entityList[listLength].inView := False;
+  entityList[listLength].isDead := False;
   entityList[listLength].posX := npcx;
   entityList[listLength].posY := npcy;
 end;
