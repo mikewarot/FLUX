@@ -19,7 +19,7 @@ procedure saveGame;
 implementation
 
 uses
-  entities;
+  entities, player;
 
 // Random(Range End - Range Start) + Range Start;
 function randomRange(fromNumber, toNumber: smallint): smallint;
@@ -40,10 +40,47 @@ begin
     // Create a document
     Doc := TXMLDocument.Create;
     // Create a root node
-    RootNode := Doc.CreateElement('Enemies');
+    RootNode := Doc.CreateElement('root');
     Doc.Appendchild(RootNode);
     RootNode := Doc.DocumentElement;
     // Create nodes
+
+    // Player record
+    npcNode := Doc.CreateElement('Player');
+
+    ItemNode := Doc.CreateElement('currentHP');
+    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.currentHP));
+    ItemNode.AppendChild(TextNode);
+    npcNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('maxHP');
+    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.maxHP));
+    ItemNode.AppendChild(TextNode);
+    npcNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('attack');
+    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.attack));
+    ItemNode.AppendChild(TextNode);
+    npcNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('defense');
+    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.defense));
+    ItemNode.AppendChild(TextNode);
+    npcNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('posX');
+    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.posX));
+    ItemNode.AppendChild(TextNode);
+    npcNode.AppendChild(ItemNode);
+
+    ItemNode := Doc.CreateElement('posY');
+    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.posY));
+    ItemNode.AppendChild(TextNode);
+    npcNode.AppendChild(ItemNode);
+
+    RootNode.AppendChild(npcNode);
+
+    // NPC records
     for i := 1 to entities.npcAmount do
     begin
       npcNode := Doc.CreateElement('NPC');

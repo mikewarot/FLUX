@@ -91,7 +91,6 @@ begin
     if entities.entityList[npcID].currentHP < 1 then
     begin
       tui.displayMessage('You kill the ' + entities.entityList[npcID].race);
-      // NPC will be deleted from array at the end of the game loop
       entities.entityList[npcID].isDead := True;
       entities.entityList[npcID].glyph := '%';
       map.unoccupy(entities.entityList[npcID].posX, entities.entityList[npcID].posY);
