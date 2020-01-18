@@ -47,7 +47,7 @@ begin
     for i := 1 to entities.npcAmount do
     begin
       npcNode := Doc.CreateElement('NPC');
-      TDOMElement(npcNode).SetAttribute('id',IntToStr(i));
+      TDOMElement(npcNode).SetAttribute('id', IntToStr(i));
 
       ItemNode := Doc.CreateElement('race');
       TextNode := Doc.CreateTextNode(entities.entityList[i].race);
@@ -58,7 +58,7 @@ begin
       TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].currentHP));
       ItemNode.AppendChild(TextNode);
       npcNode.AppendChild(ItemNode);
-      
+
       ItemNode := Doc.CreateElement('maxHP');
       TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].maxHP));
       ItemNode.AppendChild(TextNode);
@@ -69,13 +69,38 @@ begin
       ItemNode.AppendChild(TextNode);
       npcNode.AppendChild(ItemNode);
 
+      ItemNode := Doc.CreateElement('defense');
+      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].defense));
+      ItemNode.AppendChild(TextNode);
+      npcNode.AppendChild(ItemNode);
+
+      ItemNode := Doc.CreateElement('inView');
+      TextNode := Doc.CreateTextNode(BoolToStr(entities.entityList[i].inView));
+      ItemNode.AppendChild(TextNode);
+      npcNode.AppendChild(ItemNode);
+
+      ItemNode := Doc.CreateElement('isDead');
+      TextNode := Doc.CreateTextNode(BoolToStr(entities.entityList[i].isDead));
+      ItemNode.AppendChild(TextNode);
+      npcNode.AppendChild(ItemNode);
+
+      ItemNode := Doc.CreateElement('posX');
+      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].posX));
+      ItemNode.AppendChild(TextNode);
+      npcNode.AppendChild(ItemNode);
+
+      ItemNode := Doc.CreateElement('posY');
+      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].posX));
+      ItemNode.AppendChild(TextNode);
+      npcNode.AppendChild(ItemNode);
+
       RootNode.AppendChild(npcNode);
-       end;
-      // Save XML
-      WriteXMLFile(Doc, 'savegame.xml');
-    finally
-      Doc.Free;  // free memory
+    end;
+    // Save XML
+    WriteXMLFile(Doc, 'savegame.xml');
+  finally
+    Doc.Free;  // free memory
   end;
 end;
-end.
 
+end.

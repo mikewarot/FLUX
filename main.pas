@@ -117,9 +117,6 @@ begin
   for i := 1 to entities.npcAmount do
     if entities.entityList[i].isDead = False then
       simple_ai.takeTurn(i, entities.entityList[i].posX, entities.entityList[i].posY);
-  //for i := 1 to entities.npcAmount do
-  //  if entities.entityList[i].isDead = True then
-  //    entities.killEntity(i);
 end;
 
 function combatCheck(x, y: smallint): boolean;

@@ -33,14 +33,17 @@ uses
 
 procedure spawnPlayer(spx, spy: smallint);
 begin
-  ThePlayer.glyph := '@';
-  ThePlayer.glyphColour := 14;
-  ThePlayer.currentHP := 20;
-  ThePlayer.maxHP := 20;
-  ThePlayer.attack := 5;
-  ThePlayer.defense := 2;
-  ThePlayer.posX := spx;
-  ThePlayer.posY := spy;
+  with ThePlayer do
+  begin
+    glyph := '@';
+    glyphColour := 14;
+    currentHP := 20;
+    maxHP := 20;
+    attack := 5;
+    defense := 2;
+    posX := spx;
+    posY := spy;
+  end;
   main.playerX := spx;
   main.PlayerY := spy;
   GotoXY(ThePlayer.posX, ThePlayer.posY);
@@ -79,16 +82,18 @@ procedure combat(npcID: smallint);
 var
   damageAmount: smallint;
 begin
-  damageAmount := globalutils.randomRange(1, ThePlayer.attack) - entities.entityList[npcID].defense;
+  damageAmount := globalutils.randomRange(1, ThePlayer.attack) -
+    entities.entityList[npcID].defense;
   if damageAmount > 0 then
   begin
-    entities.entityList[npcID].currentHP := (entities.entityList[npcID].currentHP - damageAmount);
+    entities.entityList[npcID].currentHP :=
+      (entities.entityList[npcID].currentHP - damageAmount);
     if entities.entityList[npcID].currentHP < 1 then
     begin
       tui.displayMessage('You kill the ' + entities.entityList[npcID].race);
       // NPC will be deleted from array at the end of the game loop
-      entities.entityList[npcID].isDead:= True;
-      entities.entityList[npcID].glyph:= '%';
+      entities.entityList[npcID].isDead := True;
+      entities.entityList[npcID].glyph := '%';
       map.unoccupy(entities.entityList[npcID].posX, entities.entityList[npcID].posY);
       exit;
     end
@@ -97,7 +102,7 @@ begin
         ' for ' + IntToStr(damageAmount) + ' HP.');
   end
   else
-  tui.displayMessage('You miss');
+    tui.displayMessage('You miss');
 end;
 
 end.
