@@ -43,6 +43,7 @@ begin
   (* Game Loop *)
   main.waitForInput();
   (* exit game *)
+  globalUtils.saveGame;
   {$IFDEF WINDOWS}
   cursoron; // Unhides the cursor on Windows
   {$ENDIF}
