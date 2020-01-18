@@ -70,18 +70,21 @@ begin
   // Add a new entry to list of creatures
   listLength := length(entityList);
   SetLength(entityList, listLength + 1);
-  entityList[listLength].npcID := uniqueid;
-  entityList[listLength].race := 'Gribbly';
-  entityList[listLength].glyph := 'g';
-  entityList[listLength].glyphColour := 2;
-  entityList[listLength].currentHP := 2;
-  entityList[listLength].maxHP := 10;
-  entityList[listLength].attack := 3;
-  entityList[listLength].defense := 2;
-  entityList[listLength].inView := False;
-  entityList[listLength].isDead := False;
-  entityList[listLength].posX := npcx;
-  entityList[listLength].posY := npcy;
+  with entityList[listLength] do
+  begin
+    npcID := uniqueid;
+    race := 'Gribbly';
+    glyph := 'g';
+    glyphColour := 2;
+    currentHP := 2;
+    maxHP := 10;
+    attack := 3;
+    defense := 2;
+    inView := False;
+    isDead := False;
+    posX := npcx;
+    posY := npcy;
+  end;
 end;
 
 procedure createBooger(uniqueid, npcx, npcy: smallint);
@@ -89,18 +92,21 @@ begin
   // Add a new entry to list of creatures
   listLength := length(entityList);
   SetLength(entityList, listLength + 1);
-  entityList[listLength].npcID := uniqueid;
-  entityList[listLength].race := 'Booger';
-  entityList[listLength].glyph := 'b';
-  entityList[listLength].glyphColour := 11;
-  entityList[listLength].currentHP := 5;
-  entityList[listLength].maxHP := 10;
-  entityList[listLength].attack := 2;
-  entityList[listLength].defense := 2;
-  entityList[listLength].inView := False;
-  entityList[listLength].isDead := False;
-  entityList[listLength].posX := npcx;
-  entityList[listLength].posY := npcy;
+  with entityList[listLength] do
+  begin
+    npcID := uniqueid;
+    race := 'Booger';
+    glyph := 'b';
+    glyphColour := 11;
+    currentHP := 5;
+    maxHP := 10;
+    attack := 2;
+    defense := 2;
+    inView := False;
+    isDead := False;
+    posX := npcx;
+    posY := npcy;
+  end;
 end;
 
 procedure moveNPC(id, newX, newY: smallint);
