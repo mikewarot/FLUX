@@ -63,6 +63,8 @@ procedure unoccupy(x, y: smallint);
 function isOccupied(checkX, checkY: smallint): boolean;
 (* Check if player is on a tile *)
 function hasPlayer(checkX, checkY: smallint): boolean;
+(* Save map to stringlist *)
+function saveMap: string;
 
 implementation
 
@@ -75,7 +77,6 @@ var
   visID: smallint;
   visionRadius: array[1..MAXVISION] of maptiles;
   maparea: array[1..19, 1..67] of tile;
-
 
 (* FOV Procedures *)
 
@@ -264,6 +265,23 @@ begin
     Result := True;
 end;
 
+function saveMap: string;
+var
+  r, c: smallint;
+  line: string;
+begin
+  line := '(';
+  for r := 1 to MAXROWS do
+  begin
+    line := line + '(''';
+    for c := 1 to MAXCOLUMNS do
+      line := line + maparea[r][c].character + ''',''';
+    line := line + ')';
+  end;
+  line := line + ')';
+  Result := line;
+end;
+
 (* repaints any tiles not in FOV *)
 procedure removeFOV();
 var
@@ -296,7 +314,6 @@ procedure clearVision();
 var
   i: smallint;
 begin
-
   for i := 1 to MAXVISION do
   begin
     visionRadius[i].tileID := i;
