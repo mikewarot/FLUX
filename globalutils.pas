@@ -57,108 +57,102 @@ begin
 
     // map tiles
     for r := 1 to map.MAXROWS do
-      begin
+    begin
       for c := 1 to map.MAXCOLUMNS do
-          begin
-          dataNode := Doc.CreateElement('map_tiles');
-          TDOMElement(dataNode).SetAttribute('id', IntToStr(maparea[r][c].id));
-
-          ItemNode := Doc.CreateElement('blocks');
-          TextNode := Doc.CreateTextNode(BoolToStr(map.maparea[r][c].blocks));
-          ItemNode.AppendChild(TextNode);
-          dataNode.AppendChild(ItemNode);
-
-          RootNode.AppendChild(dataNode);
-          end;
+      begin
+        dataNode := Doc.CreateElement('map_tiles');
+        TDOMElement(dataNode).SetAttribute('id', IntToStr(maparea[r][c].id));
+        ItemNode := Doc.CreateElement('blocks');
+        TextNode := Doc.CreateTextNode(BoolToStr(map.maparea[r][c].blocks));
+        ItemNode.AppendChild(TextNode);
+        dataNode.AppendChild(ItemNode);
+        ItemNode := Doc.CreateElement('Visible');
+        TextNode := Doc.CreateTextNode(BoolToStr(map.maparea[r][c].Visible));
+        ItemNode.AppendChild(TextNode);
+        dataNode.AppendChild(ItemNode);
+        ItemNode := Doc.CreateElement('occupied');
+        TextNode := Doc.CreateTextNode(BoolToStr(map.maparea[r][c].occupied));
+        ItemNode.AppendChild(TextNode);
+        dataNode.AppendChild(ItemNode);
+        ItemNode := Doc.CreateElement('defColour');
+        TextNode := Doc.CreateTextNode(IntToStr(map.maparea[r][c].defColour));
+        ItemNode.AppendChild(TextNode);
+        dataNode.AppendChild(ItemNode);
+        ItemNode := Doc.CreateElement('hiColour');
+        TextNode := Doc.CreateTextNode(IntToStr(map.maparea[r][c].hiColour));
+        ItemNode.AppendChild(TextNode);
+        dataNode.AppendChild(ItemNode);
+        RootNode.AppendChild(dataNode);
       end;
-
-
-
+    end;
     // Player record
     dataNode := Doc.CreateElement('Player');
     ItemNode := Doc.CreateElement('currentHP');
     TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.currentHP));
     ItemNode.AppendChild(TextNode);
     dataNode.AppendChild(ItemNode);
-
     ItemNode := Doc.CreateElement('maxHP');
     TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.maxHP));
     ItemNode.AppendChild(TextNode);
     dataNode.AppendChild(ItemNode);
-
     ItemNode := Doc.CreateElement('attack');
     TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.attack));
     ItemNode.AppendChild(TextNode);
     dataNode.AppendChild(ItemNode);
-
     ItemNode := Doc.CreateElement('defense');
     TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.defense));
     ItemNode.AppendChild(TextNode);
     dataNode.AppendChild(ItemNode);
-
     ItemNode := Doc.CreateElement('posX');
     TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.posX));
     ItemNode.AppendChild(TextNode);
     dataNode.AppendChild(ItemNode);
-
     ItemNode := Doc.CreateElement('posY');
     TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.posY));
     ItemNode.AppendChild(TextNode);
     dataNode.AppendChild(ItemNode);
-
     RootNode.AppendChild(dataNode);
-
     // NPC records
     for i := 1 to entities.npcAmount do
     begin
       dataNode := Doc.CreateElement('NPC');
       TDOMElement(dataNode).SetAttribute('id', IntToStr(i));
-
       ItemNode := Doc.CreateElement('race');
       TextNode := Doc.CreateTextNode(entities.entityList[i].race);
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       ItemNode := Doc.CreateElement('currentHP');
       TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].currentHP));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       ItemNode := Doc.CreateElement('maxHP');
       TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].maxHP));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       ItemNode := Doc.CreateElement('attack');
       TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].attack));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       ItemNode := Doc.CreateElement('defense');
       TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].defense));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       ItemNode := Doc.CreateElement('inView');
       TextNode := Doc.CreateTextNode(BoolToStr(entities.entityList[i].inView));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       ItemNode := Doc.CreateElement('isDead');
       TextNode := Doc.CreateTextNode(BoolToStr(entities.entityList[i].isDead));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       ItemNode := Doc.CreateElement('posX');
       TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].posX));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       ItemNode := Doc.CreateElement('posY');
       TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].posX));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
-
       RootNode.AppendChild(dataNode);
     end;
     // Save XML
