@@ -47,6 +47,19 @@ begin
     RootNode := Doc.DocumentElement;
     // Create nodes
 
+    // Game data
+    dataNode := Doc.CreateElement('GameData');
+    ItemNode := Doc.CreateElement('RandSeed');
+    TextNode := Doc.CreateTextNode(IntToStr(RandSeed));
+    ItemNode.AppendChild(TextNode);
+    dataNode.AppendChild(ItemNode);
+    ItemNode := Doc.CreateElement('npcAmount');
+    TextNode := Doc.CreateTextNode(IntToStr(entities.npcAmount));
+    ItemNode.AppendChild(TextNode);
+    dataNode.AppendChild(ItemNode);
+
+    RootNode.AppendChild(dataNode);
+
     // Game map
     dataNode := Doc.CreateElement('Map');
     ItemNode := Doc.CreateElement('map_area');
