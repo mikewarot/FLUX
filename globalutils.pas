@@ -32,7 +32,7 @@ end;
 
 procedure saveGame;
 var
-  i: smallint;
+  i, r, c: smallint;
   mapString: string;
   Doc: TXMLDocument;
   RootNode, dataNode, ItemNode, TextNode: TDOMNode;
@@ -54,6 +54,25 @@ begin
     ItemNode.AppendChild(TextNode);
     dataNode.AppendChild(ItemNode);
     RootNode.AppendChild(dataNode);
+
+    // map tiles
+    for r := 1 to map.MAXROWS do
+      begin
+      for c := 1 to map.MAXCOLUMNS do
+          begin
+          dataNode := Doc.CreateElement('map_tiles');
+          TDOMElement(dataNode).SetAttribute('id', IntToStr(maparea[r][c].id));
+
+          ItemNode := Doc.CreateElement('blocks');
+          TextNode := Doc.CreateTextNode(BoolToStr(map.maparea[r][c].blocks));
+          ItemNode.AppendChild(TextNode);
+          dataNode.AppendChild(ItemNode);
+
+          RootNode.AppendChild(dataNode);
+          end;
+      end;
+
+
 
     // Player record
     dataNode := Doc.CreateElement('Player');

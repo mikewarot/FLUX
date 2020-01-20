@@ -16,6 +16,7 @@ clearVision	map.pas	/^procedure clearVision();$/;"	p
 combat	player.pas	/^procedure combat(npcID: smallint);$/;"	p
 combat	simple_ai.pas	/^procedure combat(id: smallint);$/;"	p
 combatCheck	main.pas	/^function combatCheck(x, y: smallint): boolean;$/;"	f
+createBooger	entities.pas	/^procedure createBooger(uniqueid, npcx, npcy: smallint);$/;"	p
 createCorridor	dungeon.pas	/^procedure createCorridor(fromX, fromY, toX, toY: smallint);$/;"	p
 createGribbly	entities.pas	/^procedure createGribbly(uniqueid, npcx, npcy: smallint);$/;"	p
 createRoom	dungeon.pas	/^procedure createRoom(gridNumber: smallint);$/;"	p
@@ -39,6 +40,8 @@ occupy	map.pas	/^procedure occupy(x, y: smallint);$/;"	p
 paintFOV	map.pas	/^procedure paintFOV(y1, x1, y2, x2, y3, x3, y4, x4, y5, x5: smallint);$/;"	p
 randomRange	globalutils.pas	/^function randomRange(fromNumber, toNumber: smallint): smallint;$/;"	f
 removeFOV	map.pas	/^procedure removeFOV();$/;"	p
+saveGame	globalutils.pas	/^procedure saveGame;$/;"	p
+saveMap	map.pas	/^function saveMap: string;$/;"	f
 setupMap	map.pas	/^procedure setupMap;$/;"	p
 spawnNPC	entities.pas	/^procedure spawnNPC();$/;"	p
 spawnPlayer	player.pas	/^procedure spawnPlayer(spx, spy: smallint);$/;"	p

@@ -35,11 +35,14 @@ type
   end;
 
   (* tiles that make up vision radius of player *)
-  maptiles = record
+  fovTile = record
     tileID: smallint;
     inSight: boolean;
     gtx, gty: smallint;
   end;
+
+var
+  maparea: array[1..19, 1..67] of tile;
 
 (* Calculate what the player can see *)
 procedure FOV(x, y: smallint);
@@ -75,8 +78,7 @@ var
   r, c: smallint;
   (* FOV tile ID *)
   visID: smallint;
-  visionRadius: array[1..MAXVISION] of maptiles;
-  maparea: array[1..19, 1..67] of tile;
+  visionRadius: array[1..MAXVISION] of fovTile;
 
 (* FOV Procedures *)
 
