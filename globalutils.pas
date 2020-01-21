@@ -11,6 +11,9 @@ uses
   DOM,
   XMLWrite;
 
+const
+  saveFile = 'savegame.xml';
+
 (* Select random number from a range *)
 function randomRange(fromNumber, toNumber: smallint): smallint;
 (* Save game state to XML file *)
@@ -169,7 +172,7 @@ begin
       RootNode.AppendChild(dataNode);
     end;
     // Save XML
-    WriteXMLFile(Doc, 'savegame.xml');
+    WriteXMLFile(Doc, saveFile);
   finally
     Doc.Free;  // free memory
   end;

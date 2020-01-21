@@ -10,8 +10,10 @@ uses {$IFDEF LINUX}
   unix,
  {$IFDEF UseCThreads}cthreads,
  {$ENDIF} {$ENDIF} {$IFDEF WINDOWS}Windows, {$ENDIF}
+  SysUtils,
   crt,
   Math,
+  tui,
   map,
   main,
   simple_ai,
@@ -19,6 +21,9 @@ uses {$IFDEF LINUX}
   pathfinding,
   dungeon,
   globalutils;
+
+var
+  menuOption: char;
 
 begin
   (* Set random seed *)
@@ -38,8 +43,48 @@ begin
   {$IFDEF Linux}
   fpSystem('tput civis'); // Hides the cursor on Linux
   {$ENDIF}
-  (* Setup new game *)
-  main.gameStart();
+  (* Title screen *)
+  GoToXY(38, 12);
+  TextColor(LightGray);
+  Write('FLUX');
+  GoToXY(25, 14);
+  Write('Free pascaL rogUelike eXample');
+  TextBackground(LightGray);
+  TextColor(Black);
+  GoToXY(25, 14);
+  Write('F');
+  GoToXY(35, 14);
+  Write('L');
+  GoToXY(40, 14);
+  Write('U');
+  GoToXY(48, 14);
+  Write('X');
+  TextColor(7);
+  TextBackground(0);
+  (* Check for previous save file *)
+  if FileExists(globalutils.saveFile) then
+  begin
+    repeat
+      GotoXY(15, 23);
+      Write('''C'' - Continue last saved game | ''N'' - New game');
+      menuOption := readkey;
+      while KeyPressed do
+        ReadKey;
+    until (UpperCase(menuOption) = 'N');
+    main.newGame;
+  end
+  else
+  begin
+    (* Setup new game *)
+    repeat
+      GotoXY(15, 23);
+      Write('''N'' - Start a New game');
+      menuOption := readkey;
+      while KeyPressed do
+        ReadKey;
+    until (UpperCase(menuOption) = 'N');
+    main.newGame;
+  end;
   (* Game Loop *)
   main.waitForInput();
   (* exit game *)

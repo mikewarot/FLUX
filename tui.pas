@@ -7,7 +7,7 @@ unit tui;
 interface
 
 uses
-  crt, player;
+  crt, player, main;
 
 const
   (* Map limits. With sidebar it comes to 80x24 - standard Unix terminal size. *)
@@ -29,7 +29,6 @@ var
   messageArray: array[1..3] of string = (' ', ' ', ' ');
 
 procedure drawSidepanel; // Draws the panel on side of screen
-procedure titleScreen; // Display title screen
 procedure displayMessage(message: string); // Display message
 procedure UpdateHP; // Updates the amount of HP on the sidebar
 
@@ -79,28 +78,6 @@ begin
   Write('  Player');
   GoToXY(xmax + 2, ymin + 3);
   Write('HP ', player.ThePlayer.currentHP, '/', player.ThePlayer.maxHP);
-end;
-
-(* Draws the title screen *)
-procedure titleScreen;
-begin
-  GoToXY(38, 12);
-  TextColor(LightGray);
-  Write('FLUX');
-  GoToXY(25, 14);
-  Write('Free pascaL rogUelike eXample');
-  TextBackground(LightGray);
-  TextColor(Black);
-  GoToXY(25, 14);
-  Write('F');
-  GoToXY(35, 14);
-  Write('L');
-  GoToXY(40, 14);
-  Write('U');
-  GoToXY(48, 14);
-  Write('X');
-  TextColor(7);
-  TextBackground(0);
 end;
 
 procedure displayMessage(message: string);

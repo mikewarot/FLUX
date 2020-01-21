@@ -18,11 +18,13 @@ var
   playerX, playerY: smallint;
 
 (* New game setup *)
-procedure gameStart();
+procedure newGame;
+(* Continue a saved game *)
+procedure continueGame;
 (* Waits for player input *)
-procedure waitForInput();
+procedure waitForInput;
 (* Handles NPC movement after player moves *)
-procedure gameLoop();
+procedure gameLoop;
 (* Check if tile is occupied by an NPC *)
 function combatCheck(x, y: smallint): boolean;
 
@@ -36,8 +38,13 @@ uses
   map,
   dungeon;
 
+procedure continueGame;
+begin
+
+end;
+
 (* Each movement is triggered by an individual keypress as the game is turn based *)
-procedure waitForInput();
+procedure waitForInput;
 var
   oldX, oldY: smallint;
 begin
@@ -90,10 +97,8 @@ begin
   until UpCase(moveCH) = 'Q';
 end;
 
-procedure gameStart();
+procedure newGame;
 begin
-  (* Draw the title screen *)
-  tui.titleScreen;
   (* Set up the map *)
   map.setupMap;
   (* wait for a keypress *)
@@ -110,7 +115,7 @@ begin
   tui.UpdateHP;
 end;
 
-procedure gameLoop();
+procedure gameLoop;
 var
   i: smallint;
 begin
