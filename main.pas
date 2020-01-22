@@ -36,11 +36,12 @@ uses
   entities,
   simple_ai,
   map,
-  dungeon;
+  dungeon,
+  globalutils;
 
 procedure continueGame;
 begin
-
+  globalutils.loadGame;
 end;
 
 (* Each movement is triggered by an individual keypress as the game is turn based *)

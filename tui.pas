@@ -7,7 +7,7 @@ unit tui;
 interface
 
 uses
-  crt, player, main;
+  crt, player;
 
 const
   (* Map limits. With sidebar it comes to 80x24 - standard Unix terminal size. *)

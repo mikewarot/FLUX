@@ -71,7 +71,7 @@ begin
       while KeyPressed do
         ReadKey;
     until (UpperCase(menuOption) = 'N');
-    main.newGame;
+    main.continueGame;
   end
   else
   begin
