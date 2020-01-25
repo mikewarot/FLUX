@@ -14,7 +14,7 @@ uses
 
 const
   (* Save game file *)
-  saveGame = 'fluxsave.xml';
+  saveFile = 'fluxsave.xml';
   (* Columns of the game map *)
   MAXCOLUMNS = 67;
   (* Rows of the game map *)
@@ -183,7 +183,7 @@ begin
       RootNode.AppendChild(dataNode);
     end;
     // Save XML
-    WriteXMLFile(Doc, saveGame);
+    WriteXMLFile(Doc, saveFile);
   finally
     Doc.Free;  // free memory
   end;
@@ -195,13 +195,14 @@ var
   hiColour, defColour, PlayerNode, NPCnode, RaceNode, CurrentHPnode,
   MaxHPnode, AttackNode, DefenseNode, ViewNode, DeadNode, PosX, PosY: TDOMNode;
   Doc: TXMLDocument;
-  i, npcAmount, totalTiles: integer;
+  r, c, i, npcAmount, totalTiles: integer;
+  mapData: string;
 begin
   // Number of tiles in game map
   totalTiles := 1273;
   try
     // Read in xml file from disk
-    ReadXMLFile(Doc, saveGame);
+    ReadXMLFile(Doc, saveFile);
     // Retrieve the nodes
     RootNode := Doc.DocumentElement.FindNode('GameData');
     (* Random Seed *)
@@ -211,7 +212,18 @@ begin
     entities.npcAmount := StrToInt(ParentNode.TextContent);
     (* Game Map *)
     ParentNode := Rootnode.NextSibling;
-    dungeonLoadArray := ParentNode.FirstChild.TextContent;
+    mapData := ParentNode.FirstChild.TextContent;
+    i := 1;
+    for r := 1 to MAXROWS do
+    begin
+      for c := 1 to MAXCOLUMNS do
+      begin
+        dungeonLoadArray[r][c] := mapData[i];
+        Inc(i);
+      end;
+
+    end;
+
 
   finally
     // finally, free the document

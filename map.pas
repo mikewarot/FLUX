@@ -272,15 +272,12 @@ var
   r, c: smallint;
   line: string;
 begin
-  line := '(';
+  line := '';
   for r := 1 to MAXROWS do
   begin
-    line := line + '(''';
     for c := 1 to MAXCOLUMNS do
-      line := line + maparea[r][c].character + ''',''';
-    line := line + ')';
+      line := line + maparea[r][c].character;
   end;
-  line := line + ')';
   Result := line;
 end;
 
