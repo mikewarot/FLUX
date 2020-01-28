@@ -11,6 +11,7 @@ FLUX is a small hobby project to create a basic roguelike that runs in a text te
  - Small, native binary under 1mb in size
 
 The code is released into the public domain, feel free to use it or modify it in any way you choose.
+
 ![Public Domain](https://img.shields.io/github/license/cyberfilth/FLUX)
 
 ![Animated screenshot](animated_gif.gif)
@@ -29,4 +30,5 @@ The [wiki](https://github.com/cyberfilth/FLUX/wiki) contains documentation for a
 ## tags
 The tags file contains an index of procedures and functions found in the source code. This file will automatically be loaded when viewing a source file in Vim, allowing you to jump straight to a function when you encounter it in the code.  
 This file was generated with the Exuberant Ctags tool.
+
 ![Stars](https://img.shields.io/github/stars/cyberfilth/FLUX)
