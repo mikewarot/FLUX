@@ -68,6 +68,8 @@ function isOccupied(checkX, checkY: smallint): boolean;
 function hasPlayer(checkX, checkY: smallint): boolean;
 (* Save map to stringlist *)
 function saveMap: string;
+(* Load map from save *)
+procedure loadMap;
 
 implementation
 
@@ -279,6 +281,31 @@ begin
       line := line + maparea[r][c].character;
   end;
   Result := line;
+end;
+
+procedure loadMap;
+begin
+  //for r := 1 to MAXROWS do
+  //begin
+  //  for c := 1 to MAXCOLUMNS do
+  //  begin
+  //    maparea[r][c].id := id_int;
+  //    maparea[r][c].blocks := False;
+  //    maparea[r][c].Visible := False;
+  //    maparea[r][c].occupied := False;
+  //    maparea[r][c].defColour := 7;
+  //    maparea[r][c].hiColour := 15;
+  //    if dungeon.dungeonArray[r][c] = '#' then
+  //    begin
+  //      maparea[r][c].character := wall;
+  //      maparea[r][c].blocks := True;
+  //    end;
+  //    if dungeon.dungeonArray[r][c] = '.' then
+  //    begin
+  //      maparea[r][c].character := floor;
+  //    end;
+  //  end;
+  //end;
 end;
 
 (* repaints any tiles not in FOV *)

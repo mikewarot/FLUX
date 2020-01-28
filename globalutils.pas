@@ -22,6 +22,7 @@ const
 
 var
   dungeonLoadArray: array[1..MAXROWS, 1..MAXCOLUMNS] of char;
+  randomSeed: integer;
 
 (* Select random number from a range *)
 function randomRange(fromNumber, toNumber: smallint): smallint;
@@ -221,8 +222,44 @@ begin
         dungeonLoadArray[r][c] := mapData[i];
         Inc(i);
       end;
-
     end;
+    (* Map tile data *)
+    Tile := ParentNode.NextSibling;
+    //for i := 1 to totalTiles do
+    //begin
+    i := 1;
+    for r := 1 to MAXROWS do
+    begin
+      for c := 1 to MAXCOLUMNS do
+      begin
+        map.maparea[r][c].id := i;
+        Blocks := Tile.FirstChild;
+        maparea[r][c].blocks := StrToBool(Blocks.TextContent);
+        Visible := Blocks.NextSibling;
+        maparea[r][c].Visible := StrToBool(Visible.TextContent);
+        Occupied := Visible.NextSibling;
+        maparea[r][c].occupied := StrToBool(Occupied.TextContent);
+        defColour := Occupied.NextSibling;
+        maparea[r][c].defColour := StrToInt(defColour.TextContent);
+        hiColour := defColour.NextSibling;
+        maparea[r][c].hiColour := StrToInt(hiColour.TextContent);
+
+        NextNode := Tile.NextSibling;
+        Tile := NextNode;
+      end;
+    end;
+    (* Player info *)
+    PlayerNode := Doc.DocumentElement.FindNode('Player');
+    player.ThePlayer.currentHP := StrToInt(PlayerNode.FirstChild.TextContent);
+    player.ThePlayer.maxHP := StrToInt(PlayerNode.FirstChild.NextSibling.TextContent);
+    NextNode := PlayerNode.FirstChild.NextSibling;
+    player.ThePlayer.attack := StrToInt(NextNode.NextSibling.TextContent);
+    ParentNode := NextNode.NextSibling;
+    player.ThePlayer.defense := StrToInt(ParentNode.NextSibling.TextContent);
+    NextNode := ParentNode.NextSibling;
+    player.ThePlayer.posX := StrToInt(NextNode.NextSibling.TextContent);
+    ParentNode := NextNode.NextSibling;
+    player.ThePlayer.posY := StrToInt(NextNode.NextSibling.TextContent);
 
 
   finally

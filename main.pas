@@ -42,6 +42,11 @@ uses
 procedure continueGame;
 begin
   globalutils.loadGame;
+   (* wait for a keypress *)
+  clrscr;
+  (* Draw the UI *)
+  tui.drawSidepanel;
+  tui.UpdateHP;
 end;
 
 (* Each movement is triggered by an individual keypress as the game is turn based *)
@@ -100,10 +105,15 @@ end;
 
 procedure newGame;
 begin
+  (* Set random seed *)
+  {$IFDEF Linux}
+  RandSeed := RandSeed shl 8;
+  {$ENDIF}
+  {$IFDEF Windows}
+  RandSeed := ((RandSeed shl 8) or GetCurrentProcessID) xor GetTickCount64;
+  {$ENDIF}
   (* Set up the map *)
   map.setupMap;
-  (* wait for a keypress *)
-  readkey;
   clrscr;
   (* Draw the UI *)
   tui.drawSidepanel;
