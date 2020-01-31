@@ -48,11 +48,9 @@ end;
 procedure saveGame;
 var
   i, r, c: smallint;
-  mapString: string;
   Doc: TXMLDocument;
   RootNode, dataNode, ItemNode, TextNode: TDOMNode;
 begin
-  mapString := map.saveMap;
   try
     // Create a document
     Doc := TXMLDocument.Create;
@@ -72,17 +70,7 @@ begin
     TextNode := Doc.CreateTextNode(IntToStr(entities.npcAmount));
     ItemNode.AppendChild(TextNode);
     dataNode.AppendChild(ItemNode);
-
     RootNode.AppendChild(dataNode);
-
-    // Game map
-    dataNode := Doc.CreateElement('Map');
-    ItemNode := Doc.CreateElement('map_area');
-    TextNode := Doc.CreateTextNode(mapString);
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    RootNode.AppendChild(dataNode);
-
     // map tiles
     for r := 1 to map.MAXROWS do
     begin
@@ -211,7 +199,6 @@ var
   ViewNode, DeadNode, PosX, PosY, characterNode: TDOMNode;
   Doc: TXMLDocument;
   r, c, i: integer;
-  mapData: string;
 begin
   try
     // Read in xml file from disk
@@ -219,33 +206,30 @@ begin
     // Retrieve the nodes
     RootNode := Doc.DocumentElement.FindNode('GameData');
     (* Random Seed *)
-    // RandSeed := StrToInt(RootNode.FirstChild.TextContent);
+    //RandSeed := StrToInt(RootNode.FirstChild.TextContent);
     ParentNode := RootNode.FirstChild.NextSibling;
     (* NPC amount *)
     entities.npcAmount := StrToInt(ParentNode.TextContent);
-    (* Game Map *)
-    ParentNode := Rootnode.NextSibling;
-    mapData := ParentNode.FirstChild.TextContent;
     (* Map tile data *)
-    Tile := ParentNode.NextSibling;
+    Tile := RootNode.NextSibling;
     for r := 1 to MAXROWS do
     begin
       for c := 1 to MAXCOLUMNS do
       begin
         map.maparea[r][c].id := StrToInt(Tile.Attributes.Item[0].NodeValue);
         Blocks := Tile.FirstChild;
-        maparea[r][c].blocks := StrToBool(Blocks.TextContent);
+        map.maparea[r][c].blocks := StrToBool(Blocks.TextContent);
         Visible := Blocks.NextSibling;
-        maparea[r][c].Visible := StrToBool(Visible.TextContent);
+        map.maparea[r][c].Visible := StrToBool(Visible.TextContent);
         Occupied := Visible.NextSibling;
-        maparea[r][c].occupied := StrToBool(Occupied.TextContent);
+        map.maparea[r][c].occupied := StrToBool(Occupied.TextContent);
         defColour := Occupied.NextSibling;
-        maparea[r][c].defColour := StrToInt(defColour.TextContent);
+        map.maparea[r][c].defColour := StrToInt(defColour.TextContent);
         hiColour := defColour.NextSibling;
-        maparea[r][c].hiColour := StrToInt(hiColour.TextContent);
+        map.maparea[r][c].hiColour := StrToInt(hiColour.TextContent);
         characterNode := hiColour.NextSibling;
         // Convert String to Char
-        maparea[r][c].character := characterNode.TextContent[1];
+        map.maparea[r][c].character := characterNode.TextContent[1];
 
         NextNode := Tile.NextSibling;
         Tile := NextNode;
