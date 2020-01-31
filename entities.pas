@@ -40,6 +40,8 @@ procedure createGribbly(uniqueid, npcx, npcy: smallint);
 procedure createBooger(uniqueid, npcx, npcy: smallint);
 (* Move NPC's *)
 procedure moveNPC(id, newX, newY: smallint);
+(* Redraw all NPC's *)
+procedure redrawNPC;
 
 implementation
 
@@ -137,6 +139,21 @@ begin
   end
   else
     entityList[id].inView := False;
+end;
+
+procedure redrawNPC;
+var
+  i: smallint;
+begin
+  for i := 1 to npcAmount do
+  begin
+    if entityList[i].inView = True then
+    begin
+      GotoXY(entityList[i].posX, entityList[i].posY);
+      TextColor(entityList[i].glyphColour);
+      Write(entityList[i].glyph);
+    end;
+  end;
 end;
 
 end.

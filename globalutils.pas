@@ -110,6 +110,11 @@ begin
         TextNode := Doc.CreateTextNode(IntToStr(map.maparea[r][c].hiColour));
         ItemNode.AppendChild(TextNode);
         dataNode.AppendChild(ItemNode);
+        ItemNode := Doc.CreateElement('character');
+        TextNode := Doc.CreateTextNode(map.maparea[r][c].character);
+        ItemNode.AppendChild(TextNode);
+        dataNode.AppendChild(ItemNode);
+
         RootNode.AppendChild(dataNode);
       end;
     end;
@@ -147,6 +152,14 @@ begin
       TDOMElement(dataNode).SetAttribute('id', IntToStr(i));
       ItemNode := Doc.CreateElement('race');
       TextNode := Doc.CreateTextNode(entities.entityList[i].race);
+      ItemNode.AppendChild(TextNode);
+      dataNode.AppendChild(ItemNode);
+      ItemNode := Doc.CreateElement('glyph');
+      TextNode := Doc.CreateTextNode(entities.entityList[i].glyph);
+      ItemNode.AppendChild(TextNode);
+      dataNode.AppendChild(ItemNode);
+      ItemNode := Doc.CreateElement('glyphColour');
+      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].glyphColour));
       ItemNode.AppendChild(TextNode);
       dataNode.AppendChild(ItemNode);
       ItemNode := Doc.CreateElement('currentHP');
@@ -193,46 +206,33 @@ end;
 procedure loadGame;
 var
   RootNode, ParentNode, Tile, NextNode, Blocks, Visible, Occupied,
-  hiColour, defColour, PlayerNode, NPCnode, RaceNode, CurrentHPnode,
-  MaxHPnode, AttackNode, DefenseNode, ViewNode, DeadNode, PosX, PosY: TDOMNode;
+  hiColour, defColour, PlayerNode, NPCnode, RaceNode, GlyphNode,
+  GColourNode, CurrentHPnode, MaxHPnode, AttackNode, DefenseNode,
+  ViewNode, DeadNode, PosX, PosY, characterNode: TDOMNode;
   Doc: TXMLDocument;
-  r, c, i, npcAmount, totalTiles: integer;
+  r, c, i: integer;
   mapData: string;
 begin
-  // Number of tiles in game map
-  totalTiles := 1273;
   try
     // Read in xml file from disk
     ReadXMLFile(Doc, saveFile);
     // Retrieve the nodes
     RootNode := Doc.DocumentElement.FindNode('GameData');
     (* Random Seed *)
-    RandSeed := StrToInt(RootNode.FirstChild.TextContent);
+    // RandSeed := StrToInt(RootNode.FirstChild.TextContent);
     ParentNode := RootNode.FirstChild.NextSibling;
     (* NPC amount *)
     entities.npcAmount := StrToInt(ParentNode.TextContent);
     (* Game Map *)
     ParentNode := Rootnode.NextSibling;
     mapData := ParentNode.FirstChild.TextContent;
-    i := 1;
-    for r := 1 to MAXROWS do
-    begin
-      for c := 1 to MAXCOLUMNS do
-      begin
-        dungeonLoadArray[r][c] := mapData[i];
-        Inc(i);
-      end;
-    end;
     (* Map tile data *)
     Tile := ParentNode.NextSibling;
-    //for i := 1 to totalTiles do
-    //begin
-    i := 1;
     for r := 1 to MAXROWS do
     begin
       for c := 1 to MAXCOLUMNS do
       begin
-        map.maparea[r][c].id := i;
+        map.maparea[r][c].id := StrToInt(Tile.Attributes.Item[0].NodeValue);
         Blocks := Tile.FirstChild;
         maparea[r][c].blocks := StrToBool(Blocks.TextContent);
         Visible := Blocks.NextSibling;
@@ -243,6 +243,9 @@ begin
         maparea[r][c].defColour := StrToInt(defColour.TextContent);
         hiColour := defColour.NextSibling;
         maparea[r][c].hiColour := StrToInt(hiColour.TextContent);
+        characterNode := hiColour.NextSibling;
+        // Convert String to Char
+        maparea[r][c].character := characterNode.TextContent[1];
 
         NextNode := Tile.NextSibling;
         Tile := NextNode;
@@ -260,7 +263,40 @@ begin
     player.ThePlayer.posX := StrToInt(NextNode.NextSibling.TextContent);
     ParentNode := NextNode.NextSibling;
     player.ThePlayer.posY := StrToInt(NextNode.NextSibling.TextContent);
-
+    (* NPC stats *)
+    SetLength(entities.entityList, 1);
+    NPCnode := PlayerNode.NextSibling;
+    for i := 1 to entities.npcAmount do
+    begin
+      entities.listLength := length(entities.entityList);
+      SetLength(entities.entityList, entities.listLength + 1);
+      entities.entityList[listLength].npcID :=
+        StrToInt(NPCnode.Attributes.Item[0].NodeValue);
+      RaceNode := NPCnode.FirstChild;
+      entities.entityList[listLength].race := RaceNode.TextContent;
+      GlyphNode := RaceNode.NextSibling;
+      entities.entityList[listLength].glyph := GlyphNode.TextContent[1];
+      GColourNode := GlyphNode.NextSibling;
+      entities.entityList[listLength].glyphColour := StrToInt(GColourNode.TextContent);
+      CurrentHPnode := GColourNode.NextSibling;
+      entities.entityList[listLength].currentHP := StrToInt(CurrentHPnode.TextContent);
+      MaxHPnode := CurrentHPnode.NextSibling;
+      entities.entityList[listLength].maxHP := StrToInt(MaxHPnode.TextContent);
+      AttackNode := MaxHPnode.NextSibling;
+      entities.entityList[listLength].attack := StrToInt(AttackNode.TextContent);
+      DefenseNode := AttackNode.NextSibling;
+      entities.entityList[listLength].defense := StrToInt(DefenseNode.TextContent);
+      ViewNode := DefenseNode.NextSibling;
+      entities.entityList[listLength].inView := StrToBool(ViewNode.TextContent);
+      DeadNode := ViewNode.NextSibling;
+      entities.entityList[listLength].isDead := StrToBool(DeadNode.TextContent);
+      PosX := DeadNode.NextSibling;
+      entities.entityList[listLength].posX := StrToInt(PosX.TextContent);
+      PosY := PosX.NextSibling;
+      entities.entityList[listLength].posY := StrToInt(PosY.TextContent);
+      ParentNode := NPCnode.NextSibling;
+      NPCnode := ParentNode;
+    end;
 
   finally
     // finally, free the document

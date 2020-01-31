@@ -74,7 +74,7 @@ procedure loadMap;
 implementation
 
 uses
-  tui, dungeon, player;
+  tui, dungeon, player, globalutils;
 
 var
   r, c: smallint;
@@ -285,27 +285,21 @@ end;
 
 procedure loadMap;
 begin
-  //for r := 1 to MAXROWS do
-  //begin
-  //  for c := 1 to MAXCOLUMNS do
-  //  begin
-  //    maparea[r][c].id := id_int;
-  //    maparea[r][c].blocks := False;
-  //    maparea[r][c].Visible := False;
-  //    maparea[r][c].occupied := False;
-  //    maparea[r][c].defColour := 7;
-  //    maparea[r][c].hiColour := 15;
-  //    if dungeon.dungeonArray[r][c] = '#' then
-  //    begin
-  //      maparea[r][c].character := wall;
-  //      maparea[r][c].blocks := True;
-  //    end;
-  //    if dungeon.dungeonArray[r][c] = '.' then
-  //    begin
-  //      maparea[r][c].character := floor;
-  //    end;
-  //  end;
-  //end;
+  for r := 1 to MAXROWS do
+  begin
+    for c := 1 to MAXCOLUMNS do
+    begin
+      if maparea[r][c].Visible = True then
+      begin
+        GotoXY(c, r);
+        TextColor(maparea[r][c].defColour);
+        if (maparea[r][c].character = '.') then
+          Write(floor);
+        if (maparea[r][c].character = '#') then
+          Write(wall);
+      end;
+    end;
+  end;
 end;
 
 (* repaints any tiles not in FOV *)

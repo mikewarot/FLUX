@@ -41,11 +41,30 @@ uses
 
 procedure continueGame;
 begin
+  (* Set random seed *)
+  {$IFDEF Linux}
+  RandSeed := RandSeed shl 8;
+  {$ENDIF}
+  {$IFDEF Windows}
+  RandSeed := ((RandSeed shl 8) or GetCurrentProcessID) xor GetTickCount64;
+  {$ENDIF}
   globalutils.loadGame;
-   (* wait for a keypress *)
   clrscr;
+  map.loadMap;
   (* Draw the UI *)
   tui.drawSidepanel;
+  (* Set up player *)
+  player.ThePlayer.glyph:='@';
+  player.ThePlayer.glyphColour := 14;
+  playerX := player.ThePlayer.posX;
+  playerY := player.ThePlayer.posY;
+  GotoXY(playerX, playerY);
+  TextColor(player.ThePlayer.glyphColour);
+  Write(player.ThePlayer.glyph);
+  entities.redrawNPC;
+
+  map.FOV(playerX, playerY);
+
   tui.UpdateHP;
 end;
 
