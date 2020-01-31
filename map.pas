@@ -129,18 +129,18 @@ begin
     end;
     Inc(visID);
     GoToXY(x, y);
-    if maparea[y][x].character = '.' then
+    if (maparea[y][x].character = '.') then
     begin
       TextColor(maparea[y][x].hiColour);
       Write(floor);
       maparea[y][x].Visible := True;
       updateVisibleTiles(visID, y, x);
     end
-    else if (maparea[y][x].character) = '#' then
+    else if (maparea[y][x].character = '#') then
     begin
       TextColor(maparea[y][x].hiColour);
       Write(wall);
-      maparea[y][y].Visible := True;
+      maparea[y][x].Visible := True;
       updateVisibleTiles(visID, y, x);
       exit;
     end;
