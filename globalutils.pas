@@ -49,7 +49,7 @@ procedure saveGame;
 var
   i, r, c: smallint;
   Doc: TXMLDocument;
-  RootNode, dataNode, ItemNode, TextNode: TDOMNode;
+  RootNode, dataNode: TDOMNode;
 
   procedure AddElement(Node : TDOMNode; Name,Value : String);
   var
@@ -136,9 +136,7 @@ end;
 procedure loadGame;
 var
   RootNode, ParentNode, Tile, NextNode, Blocks, Visible, Occupied,
-  hiColour, defColour, PlayerNode, NPCnode, RaceNode, GlyphNode,
-  GColourNode, CurrentHPnode, MaxHPnode, AttackNode, DefenseNode,
-  ViewNode, DeadNode, PosX, PosY, characterNode: TDOMNode;
+  hiColour, defColour, PlayerNode, NPCnode, characterNode: TDOMNode;
   Doc: TXMLDocument;
   r, c, i: integer;
 begin
