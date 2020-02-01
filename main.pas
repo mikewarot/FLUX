@@ -54,16 +54,18 @@ begin
   (* Draw the UI *)
   tui.drawSidepanel;
   (* Set up player *)
-  player.ThePlayer.glyph:='@';
-  player.ThePlayer.glyphColour := 14;
-  playerX := player.ThePlayer.posX;
-  playerY := player.ThePlayer.posY;
-  GotoXY(playerX, playerY);
-  TextColor(player.ThePlayer.glyphColour);
-  Write(player.ThePlayer.glyph);
-  entities.redrawNPC;
+  //player.ThePlayer.glyph:='@';
+  //player.ThePlayer.glyphColour := 14;
+  //playerX := player.ThePlayer.posX;
+  //playerY := player.ThePlayer.posY;
+  //GotoXY(playerX, playerY);
+  //TextColor(player.ThePlayer.glyphColour);
+  //Write(player.ThePlayer.glyph);
+  player.spawnPlayer(player.ThePlayer.posX, player.ThePlayer.posY);
 
-  map.FOV(playerX, playerY);
+  //map.FOV(playerX, playerY);
+
+  entities.redrawNPC;
 
   tui.UpdateHP;
 end;

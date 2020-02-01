@@ -49,7 +49,6 @@ begin
   GotoXY(ThePlayer.posX, ThePlayer.posY);
   TextColor(ThePlayer.glyphColour);
   Write(ThePlayer.glyph);
-  //clear_vision();
   map.FOV(spx, spy);
 end;
 

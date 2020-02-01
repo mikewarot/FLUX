@@ -254,30 +254,30 @@ begin
     begin
       entities.listLength := length(entities.entityList);
       SetLength(entities.entityList, entities.listLength + 1);
-      entities.entityList[listLength].npcID :=
+      entities.entityList[i].npcID :=
         StrToInt(NPCnode.Attributes.Item[0].NodeValue);
       RaceNode := NPCnode.FirstChild;
-      entities.entityList[listLength].race := RaceNode.TextContent;
+      entities.entityList[i].race := RaceNode.TextContent;
       GlyphNode := RaceNode.NextSibling;
-      entities.entityList[listLength].glyph := GlyphNode.TextContent[1];
+      entities.entityList[i].glyph := GlyphNode.TextContent[1];
       GColourNode := GlyphNode.NextSibling;
-      entities.entityList[listLength].glyphColour := StrToInt(GColourNode.TextContent);
+      entities.entityList[i].glyphColour := StrToInt(GColourNode.TextContent);
       CurrentHPnode := GColourNode.NextSibling;
-      entities.entityList[listLength].currentHP := StrToInt(CurrentHPnode.TextContent);
+      entities.entityList[i].currentHP := StrToInt(CurrentHPnode.TextContent);
       MaxHPnode := CurrentHPnode.NextSibling;
-      entities.entityList[listLength].maxHP := StrToInt(MaxHPnode.TextContent);
+      entities.entityList[i].maxHP := StrToInt(MaxHPnode.TextContent);
       AttackNode := MaxHPnode.NextSibling;
-      entities.entityList[listLength].attack := StrToInt(AttackNode.TextContent);
+      entities.entityList[i].attack := StrToInt(AttackNode.TextContent);
       DefenseNode := AttackNode.NextSibling;
-      entities.entityList[listLength].defense := StrToInt(DefenseNode.TextContent);
+      entities.entityList[i].defense := StrToInt(DefenseNode.TextContent);
       ViewNode := DefenseNode.NextSibling;
-      entities.entityList[listLength].inView := StrToBool(ViewNode.TextContent);
+      entities.entityList[i].inView := StrToBool(ViewNode.TextContent);
       DeadNode := ViewNode.NextSibling;
-      entities.entityList[listLength].isDead := StrToBool(DeadNode.TextContent);
+      entities.entityList[i].isDead := StrToBool(DeadNode.TextContent);
       PosX := DeadNode.NextSibling;
-      entities.entityList[listLength].posX := StrToInt(PosX.TextContent);
+      entities.entityList[i].posX := StrToInt(PosX.TextContent);
       PosY := PosX.NextSibling;
-      entities.entityList[listLength].posY := StrToInt(PosY.TextContent);
+      entities.entityList[i].posY := StrToInt(PosY.TextContent);
       ParentNode := NPCnode.NextSibling;
       NPCnode := ParentNode;
     end;

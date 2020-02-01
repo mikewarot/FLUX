@@ -42,7 +42,7 @@ type
   end;
 
 var
-  maparea: array[1..19, 1..67] of tile;
+  maparea: array[1..MAXROWS, 1..MAXCOLUMNS] of tile;
 
 (* Calculate what the player can see *)
 procedure FOV(x, y: smallint);
@@ -66,15 +66,13 @@ procedure unoccupy(x, y: smallint);
 function isOccupied(checkX, checkY: smallint): boolean;
 (* Check if player is on a tile *)
 function hasPlayer(checkX, checkY: smallint): boolean;
-(* Save map to stringlist *)
-function saveMap: string;
 (* Load map from save *)
 procedure loadMap;
 
 implementation
 
 uses
-  tui, dungeon, player, globalutils;
+  tui, dungeon, player;
 
 var
   r, c: smallint;
@@ -267,20 +265,6 @@ begin
   Result := False;
   if (player.ThePlayer.posX = checkX) and (player.ThePlayer.posY = checkY) then
     Result := True;
-end;
-
-function saveMap: string;
-var
-  r, c: smallint;
-  line: string;
-begin
-  line := '';
-  for r := 1 to MAXROWS do
-  begin
-    for c := 1 to MAXCOLUMNS do
-      line := line + maparea[r][c].character;
-  end;
-  Result := line;
 end;
 
 procedure loadMap;
