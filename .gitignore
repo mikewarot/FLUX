@@ -1,5 +1,5 @@
-# Save game files
-*.xml
+# Save game file
+fluxsave.xml
 *.sh
 
 # Lazarus compiler-generated binaries (safe to delete)
