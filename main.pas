@@ -7,7 +7,7 @@ unit main;
 interface
 
 uses
-  crt;
+  crt,sysutils;
 
 type
   TDirection = (moveUP, moveLEFT, moveRIGHT, moveDOWN);
@@ -46,7 +46,7 @@ begin
   RandSeed := RandSeed shl 8;
   {$ENDIF}
   {$IFDEF Windows}
-  RandSeed := ((RandSeed shl 8) or GetCurrentProcessID) xor GetTickCount64;
+  RandSeed := ((RandSeed shl 8) or GetProcessID) xor GetTickCount64;
   {$ENDIF}
   globalutils.loadGame;
   clrscr;
@@ -131,7 +131,7 @@ begin
   RandSeed := RandSeed shl 8;
   {$ENDIF}
   {$IFDEF Windows}
-  RandSeed := ((RandSeed shl 8) or GetCurrentProcessID) xor GetTickCount64;
+  RandSeed := ((RandSeed shl 8) or GetProcessID) xor GetTickCount64;
   {$ENDIF}
   (* Set up the map *)
   map.setupMap;
