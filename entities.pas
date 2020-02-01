@@ -147,7 +147,7 @@ var
 begin
   for i := 1 to npcAmount do
   begin
-    if entityList[i].inView = True then
+    if (entityList[i].inView = True) and (entityList[i].isDead = False) then
     begin
       GotoXY(entityList[i].posX, entityList[i].posY);
       TextColor(entityList[i].glyphColour);
