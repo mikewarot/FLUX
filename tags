@@ -45,7 +45,6 @@ randomRange	globalutils.pas	/^function randomRange(fromNumber, toNumber: smallin
 redrawNPC	entities.pas	/^procedure redrawNPC;$/;"	p
 removeFOV	map.pas	/^procedure removeFOV();$/;"	p
 saveGame	globalutils.pas	/^procedure saveGame;$/;"	p
-saveMap	map.pas	/^function saveMap: string;$/;"	f
 setupMap	map.pas	/^procedure setupMap;$/;"	p
 spawnNPC	entities.pas	/^procedure spawnNPC();$/;"	p
 spawnPlayer	player.pas	/^procedure spawnPlayer(spx, spy: smallint);$/;"	p
