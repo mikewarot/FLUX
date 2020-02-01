@@ -254,8 +254,8 @@ begin
     begin
       entities.listLength := length(entities.entityList);
       SetLength(entities.entityList, entities.listLength + 1);
-      entities.entityList[i].npcID :=
-        StrToInt(NPCnode.Attributes.Item[0].NodeValue);
+      entities.entityList[i].npcID := i;
+      //  StrToInt(NPCnode.Attributes.Item[0].NodeValue);
       RaceNode := NPCnode.FirstChild;
       entities.entityList[i].race := RaceNode.TextContent;
       GlyphNode := RaceNode.NextSibling;
