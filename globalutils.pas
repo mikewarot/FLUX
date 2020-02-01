@@ -50,6 +50,26 @@ var
   i, r, c: smallint;
   Doc: TXMLDocument;
   RootNode, dataNode, ItemNode, TextNode: TDOMNode;
+
+  procedure AddElement(Node : TDOMNode; Name,Value : String);
+  var
+    NameNode,ValueNode : TDomNode;
+  begin
+    NameNode  := Doc.CreateElement(Name);    // creates future Node/Name
+    ValueNode := Doc.CreateTextNode(Value);  // creates future Node/Name/Value
+    NameNode.Appendchild(ValueNode);         // place value in place
+    Node.Appendchild(NameNode);              // place Name in place
+  end;
+
+  function AddChild(Node : TDOMNode; ChildName : String): TDomNode;
+  Var
+    ChildNode : TDomNode;
+  begin
+    ChildNode := Doc.CreateElement(ChildName);
+    Node.AppendChild(ChildNode);
+    AddChild := ChildNode;
+  end;
+
 begin
   try
     // Create a document
@@ -58,131 +78,53 @@ begin
     RootNode := Doc.CreateElement('root');
     Doc.Appendchild(RootNode);
     RootNode := Doc.DocumentElement;
-    // Create nodes
 
     // Game data
-    dataNode := Doc.CreateElement('GameData');
-    ItemNode := Doc.CreateElement('RandSeed');
-    TextNode := Doc.CreateTextNode(IntToStr(RandSeed));
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    ItemNode := Doc.CreateElement('npcAmount');
-    TextNode := Doc.CreateTextNode(IntToStr(entities.npcAmount));
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    RootNode.AppendChild(dataNode);
+    DataNode := AddChild(RootNode,'GameData');
+    AddElement(datanode, 'RandSeed',IntToStr(RandSeed));
+    AddElement(datanode, 'npcAmount',IntToStr(entities.npcAmount));
+
     // map tiles
     for r := 1 to map.MAXROWS do
     begin
       for c := 1 to map.MAXCOLUMNS do
       begin
-        dataNode := Doc.CreateElement('map_tiles');
+        DataNode := AddChild(RootNode,'map_tiles');
         TDOMElement(dataNode).SetAttribute('id', IntToStr(maparea[r][c].id));
-        ItemNode := Doc.CreateElement('blocks');
-        TextNode := Doc.CreateTextNode(BoolToStr(map.maparea[r][c].blocks));
-        ItemNode.AppendChild(TextNode);
-        dataNode.AppendChild(ItemNode);
-        ItemNode := Doc.CreateElement('Visible');
-        TextNode := Doc.CreateTextNode(BoolToStr(map.maparea[r][c].Visible));
-        ItemNode.AppendChild(TextNode);
-        dataNode.AppendChild(ItemNode);
-        ItemNode := Doc.CreateElement('occupied');
-        TextNode := Doc.CreateTextNode(BoolToStr(map.maparea[r][c].occupied));
-        ItemNode.AppendChild(TextNode);
-        dataNode.AppendChild(ItemNode);
-        ItemNode := Doc.CreateElement('defColour');
-        TextNode := Doc.CreateTextNode(IntToStr(map.maparea[r][c].defColour));
-        ItemNode.AppendChild(TextNode);
-        dataNode.AppendChild(ItemNode);
-        ItemNode := Doc.CreateElement('hiColour');
-        TextNode := Doc.CreateTextNode(IntToStr(map.maparea[r][c].hiColour));
-        ItemNode.AppendChild(TextNode);
-        dataNode.AppendChild(ItemNode);
-        ItemNode := Doc.CreateElement('character');
-        TextNode := Doc.CreateTextNode(map.maparea[r][c].character);
-        ItemNode.AppendChild(TextNode);
-        dataNode.AppendChild(ItemNode);
-
-        RootNode.AppendChild(dataNode);
+        AddElement(datanode,'blocks',BoolToStr(map.maparea[r][c].blocks));
+        AddElement(datanode,'Visible',BoolToStr(map.maparea[r][c].Visible));
+        AddElement(datanode,'occupied',BoolToStr(map.maparea[r][c].occupied));
+        AddElement(datanode,'defColour',IntToStr(map.maparea[r][c].defColour));
+        AddElement(datanode,'hiColour',IntToStr(map.maparea[r][c].hiColour));
+        AddElement(datanode,'character',map.maparea[r][c].character);
       end;
     end;
     // Player record
-    dataNode := Doc.CreateElement('Player');
-    ItemNode := Doc.CreateElement('currentHP');
-    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.currentHP));
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    ItemNode := Doc.CreateElement('maxHP');
-    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.maxHP));
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    ItemNode := Doc.CreateElement('attack');
-    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.attack));
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    ItemNode := Doc.CreateElement('defense');
-    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.defense));
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    ItemNode := Doc.CreateElement('posX');
-    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.posX));
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    ItemNode := Doc.CreateElement('posY');
-    TextNode := Doc.CreateTextNode(IntToStr(player.ThePlayer.posY));
-    ItemNode.AppendChild(TextNode);
-    dataNode.AppendChild(ItemNode);
-    RootNode.AppendChild(dataNode);
+
+    DataNode := AddChild(RootNode,'Player');
+    AddElement(DataNode,'currentHP',IntToStr(player.ThePlayer.currentHP));
+    AddElement(DataNode,'maxHP',IntToStr(player.ThePlayer.maxHP));
+    AddElement(DataNode,'attack',IntToStr(player.ThePlayer.attack));
+    AddElement(DataNode,'defense',IntToStr(player.ThePlayer.defense));
+    AddElement(DataNode,'posX',IntToStr(player.ThePlayer.posX));
+    AddElement(DataNode,'posY',IntToStr(player.ThePlayer.posY));
+
     // NPC records
     for i := 1 to entities.npcAmount do
     begin
-      dataNode := Doc.CreateElement('NPC');
+      DataNode := AddChild(RootNode,'NPC');
       TDOMElement(dataNode).SetAttribute('id', IntToStr(i));
-      ItemNode := Doc.CreateElement('race');
-      TextNode := Doc.CreateTextNode(entities.entityList[i].race);
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('glyph');
-      TextNode := Doc.CreateTextNode(entities.entityList[i].glyph);
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('glyphColour');
-      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].glyphColour));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('currentHP');
-      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].currentHP));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('maxHP');
-      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].maxHP));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('attack');
-      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].attack));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('defense');
-      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].defense));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('inView');
-      TextNode := Doc.CreateTextNode(BoolToStr(entities.entityList[i].inView));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('isDead');
-      TextNode := Doc.CreateTextNode(BoolToStr(entities.entityList[i].isDead));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('posX');
-      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].posX));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      ItemNode := Doc.CreateElement('posY');
-      TextNode := Doc.CreateTextNode(IntToStr(entities.entityList[i].posX));
-      ItemNode.AppendChild(TextNode);
-      dataNode.AppendChild(ItemNode);
-      RootNode.AppendChild(dataNode);
+      AddElement(DataNode,'race',entities.entityList[i].race);
+      AddElement(DataNode,'glyph',entities.entityList[i].glyph);
+      AddElement(DataNode,'glyphColour',IntToStr(entities.entityList[i].glyphColour));
+      AddElement(DataNode,'currentHP',IntToStr(entities.entityList[i].currentHP));
+      AddElement(DataNode,'maxHP',IntToStr(entities.entityList[i].maxHP));
+      AddElement(DataNode,'attack',IntToStr(entities.entityList[i].attack));
+      AddElement(DataNode,'defense',IntToStr(entities.entityList[i].defense));
+      AddElement(DataNode,'inView',BoolToStr(entities.entityList[i].inView));
+      AddElement(DataNode,'isDead',BoolToStr(entities.entityList[i].isDead));
+      AddElement(DataNode,'posX',IntToStr(entities.entityList[i].posX));
+      AddElement(DataNode,'posY',IntToStr(entities.entityList[i].posY));
     end;
     // Save XML
     WriteXMLFile(Doc, saveFile);
@@ -237,47 +179,32 @@ begin
     end;
     (* Player info *)
     PlayerNode := Doc.DocumentElement.FindNode('Player');
-    player.ThePlayer.currentHP := StrToInt(PlayerNode.FirstChild.TextContent);
-    player.ThePlayer.maxHP := StrToInt(PlayerNode.FirstChild.NextSibling.TextContent);
-    NextNode := PlayerNode.FirstChild.NextSibling;
-    player.ThePlayer.attack := StrToInt(NextNode.NextSibling.TextContent);
-    ParentNode := NextNode.NextSibling;
-    player.ThePlayer.defense := StrToInt(ParentNode.NextSibling.TextContent);
-    NextNode := ParentNode.NextSibling;
-    player.ThePlayer.posX := StrToInt(NextNode.NextSibling.TextContent);
-    ParentNode := NextNode.NextSibling;
-    player.ThePlayer.posY := StrToInt(NextNode.NextSibling.TextContent);
+    player.ThePlayer.currentHP   := StrToInt(PlayerNode.FindNode('currentHP').TextContent);
+    player.ThePlayer.posX        := StrToInt(PlayerNode.FindNode('posX').TextContent);
+    player.ThePlayer.posY        := StrToInt(PlayerNode.FindNode('posY').TextContent);
+    player.ThePlayer.maxHP       := StrToInt(PlayerNode.FindNode('maxHP').TextContent);
+    player.ThePlayer.attack      := StrToInt(PlayerNode.FindNode('attack').TextContent);
+    player.ThePlayer.defense     := StrToInt(PlayerNode.FindNode('defense').TextContent);
+
     (* NPC stats *)
     SetLength(entities.entityList, 1);
-    NPCnode := PlayerNode.NextSibling;
+    NPCnode := Doc.DocumentElement.FindNode('NPC');
     for i := 1 to entities.npcAmount do
     begin
       entities.listLength := length(entities.entityList);
       SetLength(entities.entityList, entities.listLength + 1);
       entities.entityList[i].npcID :=
         StrToInt(NPCnode.Attributes.Item[0].NodeValue);
-      RaceNode := NPCnode.FirstChild;
-      entities.entityList[i].race := RaceNode.TextContent;
-      GlyphNode := RaceNode.NextSibling;
-      entities.entityList[i].glyph := GlyphNode.TextContent[1];
-      GColourNode := GlyphNode.NextSibling;
-      entities.entityList[i].glyphColour := StrToInt(GColourNode.TextContent);
-      CurrentHPnode := GColourNode.NextSibling;
-      entities.entityList[i].currentHP := StrToInt(CurrentHPnode.TextContent);
-      MaxHPnode := CurrentHPnode.NextSibling;
-      entities.entityList[i].maxHP := StrToInt(MaxHPnode.TextContent);
-      AttackNode := MaxHPnode.NextSibling;
-      entities.entityList[i].attack := StrToInt(AttackNode.TextContent);
-      DefenseNode := AttackNode.NextSibling;
-      entities.entityList[i].defense := StrToInt(DefenseNode.TextContent);
-      ViewNode := DefenseNode.NextSibling;
-      entities.entityList[i].inView := StrToBool(ViewNode.TextContent);
-      DeadNode := ViewNode.NextSibling;
-      entities.entityList[i].isDead := StrToBool(DeadNode.TextContent);
-      PosX := DeadNode.NextSibling;
-      entities.entityList[i].posX := StrToInt(PosX.TextContent);
-      PosY := PosX.NextSibling;
-      entities.entityList[i].posY := StrToInt(PosY.TextContent);
+      entities.entityList[i].race        := NPCnode.FindNode('race').TextContent;
+      entities.entityList[i].glyph       := Char(WideChar(NPCnode.FindNode('glyph').TextContent[1]));
+      entities.entityList[i].glyphColour := StrToInt(NPCnode.FindNode('glyphColour').TextContent);
+      entities.entityList[i].currentHP   := StrToInt(NPCnode.FindNode('currentHP').TextContent);
+      entities.entityList[i].attack      := StrToInt(NPCnode.FindNode('attack').TextContent);
+      entities.entityList[i].defense     := StrToInt(NPCnode.FindNode('defense').TextContent);
+      entities.entityList[i].inView      := StrToBool(NPCnode.FindNode('inView').TextContent);
+      entities.entityList[i].isDead      := StrToBool(NPCnode.FindNode('isDead').TextContent);
+      entities.entityList[i].posX        := StrToInt(NPCnode.FindNode('posX').TextContent);
+      entities.entityList[i].posY        := StrToInt(NPCnode.FindNode('posY').TextContent);
       ParentNode := NPCnode.NextSibling;
       NPCnode := ParentNode;
     end;
