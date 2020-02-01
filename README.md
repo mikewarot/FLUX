@@ -24,8 +24,14 @@ The source code can be compiled from the command line by navigating to the sourc
     fpc flux
 
 This will compile all units and create an executable program with the same name.
-## wiki
-The [wiki](https://github.com/cyberfilth/FLUX/wiki) contains documentation for all units in FLUX.
+
+## documentation
+All code has been heavily commented so that you can generate documentation using PasDoc, which is part of the Free Pascal package.
+Navigate to the source directory and create a folder called docs (or whatever you want to call it), then run the following commands.
+```
+mkdir docs/
+pasdoc *.pas --output docs/
+```
 
 ## tags
 The tags file contains an index of procedures and functions found in the source code. This file will automatically be loaded when viewing a source file in Vim, allowing you to jump straight to a function when you encounter it in the code.  
