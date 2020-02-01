@@ -26,14 +26,7 @@ var
   menuOption: char;
 
 begin
-  (* Set random seed *)
   Randomize;
-  {$IFDEF Linux}
-  RandSeed := RandSeed shl 8;
-  {$ENDIF}
-  {$IFDEF Windows}
-  RandSeed := ((RandSeed shl 8) or GetCurrentProcessID) xor GetTickCount64;
-  {$ENDIF}
   {$IFDEF WINDOWS}
   SetConsoleTitle('FLUX - Roguelike');
   cursoroff; // Hides the cursor on Windows
@@ -70,8 +63,11 @@ begin
       menuOption := readkey;
       while KeyPressed do
         ReadKey;
-    until (UpperCase(menuOption) = 'N');
-    main.continueGame;
+    until (UpperCase(menuOption) = 'N') or (UpperCase(menuOption) = 'C');
+    if (UpperCase(menuOption) = 'N') then
+      main.newGame;
+    if (UpperCase(menuOption) = 'C') then
+      main.continueGame;
   end
   else
   begin

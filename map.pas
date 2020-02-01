@@ -42,7 +42,7 @@ type
   end;
 
 var
-  maparea: array[1..19, 1..67] of tile;
+  maparea: array[1..MAXROWS, 1..MAXCOLUMNS] of tile;
 
 (* Calculate what the player can see *)
 procedure FOV(x, y: smallint);
@@ -66,8 +66,8 @@ procedure unoccupy(x, y: smallint);
 function isOccupied(checkX, checkY: smallint): boolean;
 (* Check if player is on a tile *)
 function hasPlayer(checkX, checkY: smallint): boolean;
-(* Save map to stringlist *)
-function saveMap: string;
+(* Load map from save *)
+procedure loadMap;
 
 implementation
 
@@ -127,18 +127,18 @@ begin
     end;
     Inc(visID);
     GoToXY(x, y);
-    if maparea[y][x].character = '.' then
+    if (maparea[y][x].character = '.') then
     begin
       TextColor(maparea[y][x].hiColour);
       Write(floor);
       maparea[y][x].Visible := True;
       updateVisibleTiles(visID, y, x);
     end
-    else if (maparea[y][x].character) = '#' then
+    else if (maparea[y][x].character = '#') then
     begin
       TextColor(maparea[y][x].hiColour);
       Write(wall);
-      maparea[y][y].Visible := True;
+      maparea[y][x].Visible := True;
       updateVisibleTiles(visID, y, x);
       exit;
     end;
@@ -267,21 +267,23 @@ begin
     Result := True;
 end;
 
-function saveMap: string;
-var
-  r, c: smallint;
-  line: string;
+procedure loadMap;
 begin
-  line := '(';
   for r := 1 to MAXROWS do
   begin
-    line := line + '(''';
     for c := 1 to MAXCOLUMNS do
-      line := line + maparea[r][c].character + ''',''';
-    line := line + ')';
+    begin
+      if maparea[r][c].Visible = True then
+      begin
+        GotoXY(c, r);
+        TextColor(maparea[r][c].defColour);
+        if (maparea[r][c].character = '.') then
+          Write(floor);
+        if (maparea[r][c].character = '#') then
+          Write(wall);
+      end;
+    end;
   end;
-  line := line + ')';
-  Result := line;
 end;
 
 (* repaints any tiles not in FOV *)
