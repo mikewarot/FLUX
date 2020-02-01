@@ -41,7 +41,33 @@ uses
 
 procedure continueGame;
 begin
+  (* Set random seed *)
+  {$IFDEF Linux}
+  RandSeed := RandSeed shl 8;
+  {$ENDIF}
+  {$IFDEF Windows}
+  RandSeed := ((RandSeed shl 8) or GetCurrentProcessID) xor GetTickCount64;
+  {$ENDIF}
   globalutils.loadGame;
+  clrscr;
+  map.loadMap;
+  (* Draw the UI *)
+  tui.drawSidepanel;
+  (* Set up player *)
+  //player.ThePlayer.glyph:='@';
+  //player.ThePlayer.glyphColour := 14;
+  //playerX := player.ThePlayer.posX;
+  //playerY := player.ThePlayer.posY;
+  //GotoXY(playerX, playerY);
+  //TextColor(player.ThePlayer.glyphColour);
+  //Write(player.ThePlayer.glyph);
+  player.spawnPlayer(player.ThePlayer.posX, player.ThePlayer.posY);
+
+  //map.FOV(playerX, playerY);
+
+  entities.redrawNPC;
+
+  tui.UpdateHP;
 end;
 
 (* Each movement is triggered by an individual keypress as the game is turn based *)
@@ -100,10 +126,15 @@ end;
 
 procedure newGame;
 begin
+  (* Set random seed *)
+  {$IFDEF Linux}
+  RandSeed := RandSeed shl 8;
+  {$ENDIF}
+  {$IFDEF Windows}
+  RandSeed := ((RandSeed shl 8) or GetCurrentProcessID) xor GetTickCount64;
+  {$ENDIF}
   (* Set up the map *)
   map.setupMap;
-  (* wait for a keypress *)
-  readkey;
   clrscr;
   (* Draw the UI *)
   tui.drawSidepanel;
